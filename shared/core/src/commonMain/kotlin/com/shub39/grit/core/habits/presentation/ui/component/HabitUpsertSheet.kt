@@ -189,6 +189,42 @@ fun HabitUpsertSheetContent(
 
             item {
                 Row(
+                    horizontalArrangement =
+                        Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
+                ) {
+                    DayOfWeek.entries.forEach { dayOfWeek ->
+                        ToggleButton(
+                            checked = newHabit.days.contains(dayOfWeek),
+                            onCheckedChange = {
+                                updateHabit(
+                                    newHabit.copy(
+                                        days =
+                                            if (it) {
+                                                newHabit.days + dayOfWeek
+                                            } else {
+                                                newHabit.days - dayOfWeek
+                                            }
+                                    )
+                                )
+                            },
+                            modifier = Modifier.weight(1f),
+                            colors = ToggleButtonDefaults.tonalToggleButtonColors(),
+                            shapes =
+                                when (dayOfWeek) {
+                                    DayOfWeek.MONDAY ->
+                                        ButtonGroupDefaults.connectedLeadingButtonShapes()
+                                    DayOfWeek.SUNDAY ->
+                                        ButtonGroupDefaults.connectedTrailingButtonShapes()
+                                    else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                                },
+                            content = { Text(text = dayOfWeek.name.take(1)) },
+                        )
+                    }
+                }
+            }
+
+            item {
+                Row(
                     modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -214,6 +250,7 @@ fun HabitUpsertSheetContent(
                     )
                 }
             }
+
 
             if (newHabit.reminder) {
                 item {
@@ -241,40 +278,6 @@ fun HabitUpsertSheetContent(
                             Icon(
                                 imageVector = vectorResource(Res.drawable.edit),
                                 contentDescription = "Pick Time",
-                            )
-                        }
-                    }
-
-                    Row(
-                        horizontalArrangement =
-                            Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
-                    ) {
-                        DayOfWeek.entries.forEach { dayOfWeek ->
-                            ToggleButton(
-                                checked = newHabit.days.contains(dayOfWeek),
-                                onCheckedChange = {
-                                    updateHabit(
-                                        newHabit.copy(
-                                            days =
-                                                if (it) {
-                                                    newHabit.days + dayOfWeek
-                                                } else {
-                                                    newHabit.days - dayOfWeek
-                                                }
-                                        )
-                                    )
-                                },
-                                modifier = Modifier.weight(1f),
-                                colors = ToggleButtonDefaults.tonalToggleButtonColors(),
-                                shapes =
-                                    when (dayOfWeek) {
-                                        DayOfWeek.MONDAY ->
-                                            ButtonGroupDefaults.connectedLeadingButtonShapes()
-                                        DayOfWeek.SUNDAY ->
-                                            ButtonGroupDefaults.connectedTrailingButtonShapes()
-                                        else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
-                                    },
-                                content = { Text(text = dayOfWeek.name.take(1)) },
                             )
                         }
                     }
