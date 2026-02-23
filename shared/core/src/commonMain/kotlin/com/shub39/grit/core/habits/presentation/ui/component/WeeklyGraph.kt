@@ -84,8 +84,6 @@ fun WeeklyGraph(
                             WeeklyTimePeriod.WEEKS_16 ->
                                 ButtonGroupDefaults.connectedLeadingButtonShapes()
                             WeeklyTimePeriod.WEEKS_8 ->
-                                ButtonGroupDefaults.connectedMiddleButtonShapes()
-                            WeeklyTimePeriod.WEEKS_4 ->
                                 ButtonGroupDefaults.connectedTrailingButtonShapes()
                         },
                     colors =

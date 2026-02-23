@@ -56,7 +56,7 @@ fun WeekDayBreakdown(
     onNavigateToPaywall: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val max = weekDayData.values.maxOrNull() ?: 100
+    val max = weekDayData.values.maxOrNull()
 
     AnalyticsCard(
         title = stringResource(Res.string.week_breakdown),
@@ -65,72 +65,75 @@ fun WeekDayBreakdown(
         onPlusClick = onNavigateToPaywall,
         modifier = modifier.heightIn(min = 200.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            weekDayData.forEach { (day, data) ->
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Box(
-                        modifier =
-                            Modifier.height(((data.toFloat() / max.toFloat()) * 200).dp)
-                                .fillMaxWidth()
-                                .background(
-                                    color =
-                                        if (data == max) MaterialTheme.colorScheme.primary
-                                        else MaterialTheme.colorScheme.secondary,
-                                    shape = CircleShape,
-                                )
+        if (max != null) {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                weekDayData.forEach { (day, data) ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.weight(1f),
                     ) {
-                        if (data == max) {
-                            Box(
-                                modifier =
-                                    Modifier.fillMaxWidth()
-                                        .aspectRatio(1f)
-                                        .padding(4.dp)
-                                        .background(
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            shape = MaterialShapes.SoftBurst.toShape(),
-                                        ),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Text(
-                                    text = data.toString(),
-                                    color = MaterialTheme.colorScheme.primary,
-                                )
-                            }
-                        } else if (data > (max / 2)) {
-                            Box(
-                                modifier =
-                                    Modifier.fillMaxWidth()
-                                        .aspectRatio(1f)
-                                        .padding(4.dp)
-                                        .background(
-                                            color = MaterialTheme.colorScheme.onSecondary,
-                                            shape = MaterialShapes.Circle.toShape(),
-                                        ),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Text(
-                                    text = data.toString(),
-                                    color = MaterialTheme.colorScheme.secondary,
-                                )
+                        Box(
+                            modifier =
+                                Modifier.height(((data.toFloat() / max.toFloat()) * 200).dp)
+                                    .fillMaxWidth()
+                                    .background(
+                                        color =
+                                            if (data == max) MaterialTheme.colorScheme.primary
+                                            else MaterialTheme.colorScheme.secondary,
+                                        shape = CircleShape,
+                                    )
+                        ) {
+                            if (data == max) {
+                                Box(
+                                    modifier =
+                                        Modifier.fillMaxWidth()
+                                            .aspectRatio(1f)
+                                            .padding(4.dp)
+                                            .background(
+                                                color = MaterialTheme.colorScheme.onPrimary,
+                                                shape = MaterialShapes.SoftBurst.toShape(),
+                                            ),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = data.toString(),
+                                        color = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
+                            } else if (data > (max / 2)) {
+                                Box(
+                                    modifier =
+                                        Modifier.fillMaxWidth()
+                                            .aspectRatio(1f)
+                                            .padding(4.dp)
+                                            .background(
+                                                color = MaterialTheme.colorScheme.onSecondary,
+                                                shape = MaterialShapes.Circle.toShape(),
+                                            ),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    Text(
+                                        text = data.toString(),
+                                        color = MaterialTheme.colorScheme.secondary,
+                                    )
+                                }
                             }
                         }
+                        Text(
+                            text = day,
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.Bold,
+                        )
                     }
-                    Text(
-                        text = day,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Bold,
-                    )
                 }
             }
-        }
+        } else NotEnoughData()
     }
 }
 
