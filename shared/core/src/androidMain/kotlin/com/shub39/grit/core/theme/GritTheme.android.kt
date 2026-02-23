@@ -18,7 +18,6 @@ package com.shub39.grit.core.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import com.materialkolor.DynamicMaterialTheme
@@ -41,8 +40,7 @@ actual fun GritTheme(theme: Theme, content: @Composable (() -> Unit)) {
             },
         isAmoled = theme.isAmoled,
         style = theme.paletteStyle,
-        typography =
-            theme.font.toFontRes()?.let { provideTypography(it) } ?: MaterialTheme.typography,
+        typography = provideTypography(theme.font.toFontRes()),
         content = content,
     )
 }

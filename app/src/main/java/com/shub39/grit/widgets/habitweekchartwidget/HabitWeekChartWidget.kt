@@ -68,12 +68,12 @@ import com.shub39.grit.core.habits.domain.HabitRepo
 import com.shub39.grit.core.habits.domain.HabitWithAnalytics
 import com.shub39.grit.core.utils.now
 import com.shub39.grit.widgets.WidgetSize
+import kotlin.math.roundToInt
+import kotlin.random.Random
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import kotlin.math.roundToInt
-import kotlin.random.Random
 
 class HabitWeekChartWidget : GlanceAppWidget(), KoinComponent {
 

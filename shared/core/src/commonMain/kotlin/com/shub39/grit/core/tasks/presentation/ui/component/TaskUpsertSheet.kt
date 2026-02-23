@@ -184,7 +184,7 @@ fun TaskUpsertSheetContent(
                 val focusRequester = remember { FocusRequester() }
 
                 LaunchedEffect(Unit) {
-                    delay(200)
+                    delay(400)
                     focusRequester.requestFocus()
                     keyboardController?.show()
                 }
@@ -214,7 +214,7 @@ fun TaskUpsertSheetContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = stringResource(Res.string.add_reminder),
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
 
                         if (newTask.reminder != null) {

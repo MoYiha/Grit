@@ -76,7 +76,7 @@ fun CategoryUpsertSheet(
         val focusRequester = remember { FocusRequester() }
 
         LaunchedEffect(Unit) {
-            delay(200)
+            delay(400)
             focusRequester.requestFocus()
             keyboardController?.show()
         }

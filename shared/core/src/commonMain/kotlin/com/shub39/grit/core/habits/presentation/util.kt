@@ -16,10 +16,6 @@
  */
 package com.shub39.grit.core.habits.presentation
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import com.shub39.grit.core.habits.domain.WeekDayFrequencyData
-import ir.ehsannarmani.compose_charts.models.Bars
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.YearMonth
@@ -36,18 +32,6 @@ fun daysStartingFrom(start: DayOfWeek): Set<DayOfWeek> {
         for (i in allDays.indices) {
             add(allDays[(startIndex + i) % allDays.size])
         }
-    }
-}
-
-fun prepareWeekDayDataToBars(data: WeekDayFrequencyData, lineColor: Color): List<Bars> {
-    return data.map { (day, count) ->
-        Bars(
-            label = day,
-            values =
-                listOf(
-                    Bars.Data(label = day, value = count.toDouble(), color = SolidColor(lineColor))
-                ),
-        )
     }
 }
 

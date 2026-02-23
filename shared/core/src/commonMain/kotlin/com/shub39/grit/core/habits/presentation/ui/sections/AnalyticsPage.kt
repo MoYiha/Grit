@@ -16,6 +16,7 @@
  */
 package com.shub39.grit.core.habits.presentation.ui.sections
 
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,10 +36,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonShapes
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -57,7 +58,6 @@ import com.kizitonwose.calendar.core.minusMonths
 import com.kizitonwose.calendar.core.now
 import com.shub39.grit.core.habits.presentation.HabitState
 import com.shub39.grit.core.habits.presentation.HabitsAction
-import com.shub39.grit.core.habits.presentation.prepareWeekDayDataToBars
 import com.shub39.grit.core.habits.presentation.ui.component.CalendarMap
 import com.shub39.grit.core.habits.presentation.ui.component.HabitStartCard
 import com.shub39.grit.core.habits.presentation.ui.component.HabitStreakCard
@@ -114,17 +114,13 @@ fun AnalyticsPage(
             firstVisibleMonth = currentMonth,
             firstDayOfWeek = state.startingDay,
         )
-    val weekDayBreakdownData =
-        remember(currentHabit.weekDayFrequencyData) {
-            prepareWeekDayDataToBars(currentHabit.weekDayFrequencyData, primary)
-        }
 
     var editDialog by remember { mutableStateOf(false) }
     var deleteDialog by remember { mutableStateOf(false) }
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Column(modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection).fillMaxSize()) {
-        TopAppBar(
+        MediumFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
             colors =
                 TopAppBarDefaults.topAppBarColors(
@@ -134,7 +130,11 @@ fun AnalyticsPage(
             title = { Text(text = currentHabit.habit.title) },
             subtitle = {
                 if (currentHabit.habit.description.isNotEmpty()) {
-                    Text(text = currentHabit.habit.description)
+                    Text(
+                        text = currentHabit.habit.description,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee(),
+                    )
                 }
             },
             windowInsets =
@@ -182,10 +182,10 @@ fun AnalyticsPage(
             },
         )
 
-        val maxWidth = 400.dp
+        val maxWidth = 380.dp
         LazyVerticalStaggeredGrid(
             modifier = Modifier.fillMaxSize(),
-            columns = StaggeredGridCells.Adaptive(minSize = 400.dp),
+            columns = StaggeredGridCells.Adaptive(minSize = maxWidth),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 60.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalItemSpacing = 8.dp,
@@ -238,7 +238,7 @@ fun AnalyticsPage(
             item {
                 WeekDayBreakdown(
                     canSeeContent = isUserSubscribed,
-                    weekDayData = weekDayBreakdownData,
+                    weekDayData = currentHabit.weekDayFrequencyData,
                     onNavigateToPaywall = onNavigateToPaywall,
                     modifier = Modifier.widthIn(max = maxWidth),
                 )

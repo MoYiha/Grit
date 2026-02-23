@@ -30,6 +30,7 @@ import com.shub39.grit.core.habits.domain.OverallAnalytics
 import com.shub39.grit.core.utils.now
 import com.shub39.grit.habits.data.database.HabitStatusDao
 import com.shub39.grit.habits.data.database.HabitsDao
+import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +46,6 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.daysUntil
 import org.koin.core.annotation.Single
-import kotlin.time.ExperimentalTime
 
 @Single(binds = [HabitRepo::class])
 @OptIn(ExperimentalTime::class)
@@ -132,21 +132,11 @@ class HabitRepository(
 
     override fun getOverallAnalytics(): Flow<OverallAnalytics> {
         return habits
-            .combine(habitStatuses) { habitsFlow, habitStatusesFlow ->
+            .combine(habitStatuses) { _, habitStatusesFlow ->
                 OverallAnalytics(
                     heatMapData = prepareHeatMapData(habitStatusesFlow),
                     weekDayFrequencyData =
                         prepareWeekDayFrequencyData(habitStatusesFlow.map { it.date }),
-                    weeklyGraphData =
-                        habitsFlow.associateWith { habit ->
-                            val habitStatusesForHabit =
-                                habitStatusesFlow.filter { it.habitId == habit.id }
-
-                            prepareLineChartData(
-                                firstDay = firstDayOfWeek.value,
-                                habitStatuses = habitStatusesForHabit,
-                            )
-                        },
                 )
             }
             .flowOn(Dispatchers.Default)

@@ -28,38 +28,26 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.kizitonwose.calendar.compose.heatmapcalendar.rememberHeatMapCalendarState
 import com.kizitonwose.calendar.core.minusMonths
 import com.kizitonwose.calendar.core.now
-import com.materialkolor.ktx.fixIfDisliked
-import com.materialkolor.ktx.harmonize
 import com.shub39.grit.core.habits.presentation.HabitState
-import com.shub39.grit.core.habits.presentation.prepareWeekDayDataToBars
 import com.shub39.grit.core.habits.presentation.ui.component.HabitHeatMap
 import com.shub39.grit.core.habits.presentation.ui.component.WeekDayBreakdown
-import com.shub39.grit.core.habits.presentation.ui.component.WeeklyGraph
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.arrow_back
 import grit.shared.core.generated.resources.overall_analytics
-import ir.ehsannarmani.compose_charts.models.DotProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
-import ir.ehsannarmani.compose_charts.models.Line
-import ir.ehsannarmani.compose_charts.models.PopupProperties
-import ir.ehsannarmani.compose_charts.models.StrokeStyle
-import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.stringResource
@@ -81,47 +69,7 @@ fun OverallAnalytics(
 ) {
     val windowSizeClass = LocalWindowSizeClass.current
 
-    val primary = MaterialTheme.colorScheme.primary
     val currentMonth = remember { YearMonth.now() }
-
-    val heatMapData = state.overallAnalytics.heatMapData
-    val weeklyBreakdownData =
-        remember(state.overallAnalytics.weekDayFrequencyData) {
-            prepareWeekDayDataToBars(
-                data = state.overallAnalytics.weekDayFrequencyData,
-                lineColor = primary,
-            )
-        }
-    val weeklyGraphData =
-        state.overallAnalytics.weeklyGraphData.map { entry ->
-            val habit = entry.key
-            val color =
-                Color(
-                        red = Random.nextFloat(),
-                        green = Random.nextFloat(),
-                        blue = Random.nextFloat(),
-                    )
-                    .harmonize(primary, true)
-                    .fixIfDisliked()
-
-            Line(
-                label = habit.title,
-                values = entry.value,
-                color = SolidColor(color),
-                dotProperties =
-                    DotProperties(
-                        enabled = false,
-                        color = SolidColor(color),
-                        strokeWidth = 4.dp,
-                        radius = 7.dp,
-                    ),
-                firstGradientFillColor = color.copy(alpha = 0.8f),
-                secondGradientFillColor = Color.Transparent,
-                popupProperties = PopupProperties(enabled = false),
-                drawStyle = DrawStyle.Stroke(width = 3.dp, strokeStyle = StrokeStyle.Normal),
-            )
-        }
-
     val heatMapState =
         rememberHeatMapCalendarState(
             startMonth = currentMonth.minusMonths(12),
@@ -132,7 +80,7 @@ fun OverallAnalytics(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Column(modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection).fillMaxSize()) {
-        TopAppBar(
+        MediumFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
             colors =
                 TopAppBarDefaults.topAppBarColors(
@@ -158,10 +106,10 @@ fun OverallAnalytics(
             },
         )
 
-        val maxWidth = 400.dp
+        val maxWidth = 380.dp
         LazyVerticalStaggeredGrid(
             modifier = Modifier.fillMaxSize(),
-            columns = StaggeredGridCells.Adaptive(minSize = 400.dp),
+            columns = StaggeredGridCells.Adaptive(minSize = maxWidth),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 60.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalItemSpacing = 8.dp,
@@ -169,7 +117,7 @@ fun OverallAnalytics(
             item {
                 HabitHeatMap(
                     heatMapState = heatMapState,
-                    heatMapData = heatMapData,
+                    heatMapData = state.overallAnalytics.heatMapData,
                     modifier = Modifier.widthIn(max = maxWidth),
                     totalHabits = state.habitsWithAnalytics.size,
                 )
@@ -178,17 +126,7 @@ fun OverallAnalytics(
             item {
                 WeekDayBreakdown(
                     canSeeContent = isUserSubscribed,
-                    weekDayData = weeklyBreakdownData,
-                    onNavigateToPaywall = onNavigateToPaywall,
-                    modifier = Modifier.widthIn(max = maxWidth),
-                )
-            }
-
-            item {
-                WeeklyGraph(
-                    canSeeContent = isUserSubscribed,
-                    primary = primary,
-                    weeklyGraphData = weeklyGraphData,
+                    weekDayData = state.overallAnalytics.weekDayFrequencyData,
                     onNavigateToPaywall = onNavigateToPaywall,
                     modifier = Modifier.widthIn(max = maxWidth),
                 )
