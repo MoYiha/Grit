@@ -69,13 +69,13 @@ fun AnalyticsCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = MaterialShapes.Pill.toShape()
-                    ),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier.size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = MaterialShapes.Pill.toShape(),
+                        ),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     painter = painterResource(icon),
