@@ -38,15 +38,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.materialkolor.DynamicMaterialTheme
+import com.materialkolor.PaletteStyle
 import com.shub39.grit.core.habits.presentation.ui.HabitsGraph
 import com.shub39.grit.core.tasks.presentation.ui.TasksPage
+import com.shub39.grit.core.theme.AppTheme
+import com.shub39.grit.core.theme.GritTheme
+import com.shub39.grit.core.theme.Theme
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.alarm
@@ -89,7 +91,12 @@ fun App() {
     var currentRoute: Routes by remember { mutableStateOf(Routes.Tasks) }
     val windowSizeClass = LocalWindowSizeClass.current
 
-    DynamicMaterialTheme(seedColor = Color(0xFFBA2C), isDark = isDark) {
+    GritTheme(
+        theme = Theme(
+            appTheme = if (isDark) AppTheme.DARK else AppTheme.LIGHT,
+            paletteStyle = PaletteStyle.Expressive
+        )
+    ) {
         when (windowSizeClass.widthSizeClass) {
             WindowWidthSizeClass.Compact -> {
                 Scaffold(

@@ -214,7 +214,7 @@ fun TaskUpsertSheetContent(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = stringResource(Res.string.add_reminder),
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
 
                         if (newTask.reminder != null) {

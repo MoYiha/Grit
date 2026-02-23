@@ -230,7 +230,7 @@ fun HabitUpsertSheetContent(
                 ) {
                     Text(
                         text = stringResource(Res.string.add_reminder),
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.weight(1f),
                     )
 
@@ -270,7 +270,7 @@ fun HabitUpsertSheetContent(
 
                             Text(
                                 text = newHabit.time.time.toFormattedString(is24Hr = is24Hr),
-                                style = MaterialTheme.typography.titleLarge,
+                                style = MaterialTheme.typography.bodyLarge,
                             )
                         }
 
