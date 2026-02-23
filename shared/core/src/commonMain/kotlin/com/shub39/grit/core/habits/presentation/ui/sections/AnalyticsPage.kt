@@ -57,7 +57,6 @@ import com.kizitonwose.calendar.core.minusMonths
 import com.kizitonwose.calendar.core.now
 import com.shub39.grit.core.habits.presentation.HabitState
 import com.shub39.grit.core.habits.presentation.HabitsAction
-import com.shub39.grit.core.habits.presentation.prepareWeekDayDataToBars
 import com.shub39.grit.core.habits.presentation.ui.component.CalendarMap
 import com.shub39.grit.core.habits.presentation.ui.component.HabitStartCard
 import com.shub39.grit.core.habits.presentation.ui.component.HabitStreakCard
@@ -74,10 +73,10 @@ import grit.shared.core.generated.resources.delete
 import grit.shared.core.generated.resources.delete_warning
 import grit.shared.core.generated.resources.edit
 import grit.shared.core.generated.resources.warning
-import kotlin.time.ExperimentalTime
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import kotlin.time.ExperimentalTime
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -114,10 +113,6 @@ fun AnalyticsPage(
             firstVisibleMonth = currentMonth,
             firstDayOfWeek = state.startingDay,
         )
-    val weekDayBreakdownData =
-        remember(currentHabit.weekDayFrequencyData) {
-            prepareWeekDayDataToBars(currentHabit.weekDayFrequencyData, primary)
-        }
 
     var editDialog by remember { mutableStateOf(false) }
     var deleteDialog by remember { mutableStateOf(false) }
@@ -238,7 +233,7 @@ fun AnalyticsPage(
             item {
                 WeekDayBreakdown(
                     canSeeContent = isUserSubscribed,
-                    weekDayData = weekDayBreakdownData,
+                    weekDayData = currentHabit.weekDayFrequencyData,
                     onNavigateToPaywall = onNavigateToPaywall,
                     modifier = Modifier.widthIn(max = maxWidth),
                 )

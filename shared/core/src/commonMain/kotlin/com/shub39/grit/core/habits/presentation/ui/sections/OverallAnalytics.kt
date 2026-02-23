@@ -46,7 +46,6 @@ import com.kizitonwose.calendar.core.now
 import com.materialkolor.ktx.fixIfDisliked
 import com.materialkolor.ktx.harmonize
 import com.shub39.grit.core.habits.presentation.HabitState
-import com.shub39.grit.core.habits.presentation.prepareWeekDayDataToBars
 import com.shub39.grit.core.habits.presentation.ui.component.HabitHeatMap
 import com.shub39.grit.core.habits.presentation.ui.component.WeekDayBreakdown
 import com.shub39.grit.core.habits.presentation.ui.component.WeeklyGraph
@@ -59,11 +58,11 @@ import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.Line
 import ir.ehsannarmani.compose_charts.models.PopupProperties
 import ir.ehsannarmani.compose_charts.models.StrokeStyle
-import kotlin.random.Random
-import kotlin.time.ExperimentalTime
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import kotlin.random.Random
+import kotlin.time.ExperimentalTime
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -84,14 +83,6 @@ fun OverallAnalytics(
     val primary = MaterialTheme.colorScheme.primary
     val currentMonth = remember { YearMonth.now() }
 
-    val heatMapData = state.overallAnalytics.heatMapData
-    val weeklyBreakdownData =
-        remember(state.overallAnalytics.weekDayFrequencyData) {
-            prepareWeekDayDataToBars(
-                data = state.overallAnalytics.weekDayFrequencyData,
-                lineColor = primary,
-            )
-        }
     val weeklyGraphData =
         state.overallAnalytics.weeklyGraphData.map { entry ->
             val habit = entry.key
@@ -169,7 +160,7 @@ fun OverallAnalytics(
             item {
                 HabitHeatMap(
                     heatMapState = heatMapState,
-                    heatMapData = heatMapData,
+                    heatMapData = state.overallAnalytics.heatMapData,
                     modifier = Modifier.widthIn(max = maxWidth),
                     totalHabits = state.habitsWithAnalytics.size,
                 )
@@ -178,7 +169,7 @@ fun OverallAnalytics(
             item {
                 WeekDayBreakdown(
                     canSeeContent = isUserSubscribed,
-                    weekDayData = weeklyBreakdownData,
+                    weekDayData = state.overallAnalytics.weekDayFrequencyData,
                     onNavigateToPaywall = onNavigateToPaywall,
                     modifier = Modifier.widthIn(max = maxWidth),
                 )
