@@ -28,8 +28,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -80,7 +80,7 @@ fun OverallAnalytics(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Column(modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection).fillMaxSize()) {
-        TopAppBar(
+        MediumFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
             colors =
                 TopAppBarDefaults.topAppBarColors(
@@ -106,10 +106,10 @@ fun OverallAnalytics(
             },
         )
 
-        val maxWidth = 400.dp
+        val maxWidth = 380.dp
         LazyVerticalStaggeredGrid(
             modifier = Modifier.fillMaxSize(),
-            columns = StaggeredGridCells.Adaptive(minSize = 400.dp),
+            columns = StaggeredGridCells.Adaptive(minSize = maxWidth),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 60.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalItemSpacing = 8.dp,

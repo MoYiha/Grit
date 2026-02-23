@@ -51,9 +51,9 @@ fun provideTypography(font: FontResource? = Res.font.poppins_regular): Typograph
                 resource = Res.font.google_sans_flex,
                 variationSettings =
                     FontVariation.Settings(
-                        FontVariation.weight(900),
+                        FontVariation.weight(800),
                         FontVariation.slant(-6f),
-                        FontVariation.width(120f),
+                        FontVariation.width(110f),
                     ),
             )
         )
@@ -63,9 +63,8 @@ fun provideTypography(font: FontResource? = Res.font.poppins_regular): Typograph
                 resource = Res.font.google_sans_flex,
                 variationSettings =
                     FontVariation.Settings(
-                        FontVariation.weight(800),
-                        FontVariation.slant(-6f),
-                        FontVariation.width(120f),
+                        FontVariation.weight(500),
+                        FontVariation.Setting("ROND", 100f),
                     ),
             )
         )

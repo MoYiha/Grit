@@ -142,7 +142,7 @@ fun RootPage(
 
                         Text(
                             text = stringResource(Res.string.grit_plus),
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
                         )
 

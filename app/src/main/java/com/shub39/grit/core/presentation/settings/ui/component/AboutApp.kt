@@ -77,7 +77,7 @@ fun AboutApp() {
             Column {
                 Text(
                     text = "Grit",
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                 )
                 Text(text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")

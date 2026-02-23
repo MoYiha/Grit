@@ -22,21 +22,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.kizitonwose.calendar.compose.CalendarState
 import com.kizitonwose.calendar.compose.HorizontalCalendar
@@ -48,7 +49,10 @@ import com.kizitonwose.calendar.core.plusDays
 import com.shub39.grit.core.habits.domain.Habit
 import com.shub39.grit.core.habits.domain.HabitStatus
 import com.shub39.grit.core.habits.domain.HabitWithAnalytics
+import com.shub39.grit.core.habits.domain.StreakPosition
+import com.shub39.grit.core.habits.domain.calendarMapStreakShape
 import com.shub39.grit.core.habits.presentation.HabitsAction
+import com.shub39.grit.core.habits.presentation.daysStartingFrom
 import com.shub39.grit.core.theme.GritTheme
 import com.shub39.grit.core.utils.AllPreviews
 import com.shub39.grit.core.utils.now
@@ -73,7 +77,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /** Boolean Calendar map highlighting days */
-@OptIn(ExperimentalTime::class)
+@OptIn(ExperimentalTime::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun CalendarMap(
     canSeeContent: Boolean,
@@ -86,6 +90,11 @@ fun CalendarMap(
 ) {
     val today = LocalDate.now()
     val scope = rememberCoroutineScope()
+
+    val doneDates =
+        remember(currentHabit.statuses) { currentHabit.statuses.map { it.date }.toSet() }
+    val edgeWeeks =
+        listOf(calendarState.firstDayOfWeek, daysStartingFrom(calendarState.firstDayOfWeek).last())
 
     AnalyticsCard(
         title = stringResource(Res.string.monthly_progress),
@@ -158,70 +167,96 @@ fun CalendarMap(
             },
             dayContent = { day ->
                 if (day.position.name == "MonthDate") {
-                    val done = currentHabit.statuses.any { it.date == day.date }
+                    val done = day.date in doneDates
                     val validDate =
-                        day.date <= today &&
-                            canSeeContent &&
-                            day.date.dayOfWeek in currentHabit.habit.days
+                        day.date <= today && day.date.dayOfWeek in currentHabit.habit.days
 
                     Box(
                         modifier =
-                            Modifier.padding(1.dp)
+                            Modifier.padding(
+                                    top = 1.dp,
+                                    bottom = 1.dp,
+                                    start =
+                                        if (day.date.dayOfWeek == edgeWeeks.first()) 4.dp else 0.dp,
+                                    end = if (day.date.dayOfWeek == edgeWeeks.last()) 4.dp else 0.dp,
+                                )
                                 .fillMaxWidth()
                                 .height(40.dp)
                                 .clickable(enabled = validDate) {
                                     onAction(
                                         HabitsAction.InsertStatus(currentHabit.habit, day.date)
                                     )
-                                }
-                                .then(
-                                    if (done) {
-                                        val donePrevious =
-                                            currentHabit.statuses.any {
-                                                it.date == day.date.minusDays(1)
-                                            }
-                                        val doneAfter =
-                                            currentHabit.statuses.any {
-                                                it.date == day.date.plusDays(1)
-                                            }
-
-                                        Modifier.background(
-                                            color = primary.copy(alpha = 0.2f),
-                                            shape =
-                                                when {
-                                                    donePrevious && doneAfter ->
-                                                        RoundedCornerShape(4.dp)
-                                                    donePrevious ->
-                                                        RoundedCornerShape(
-                                                            topEnd = 1000.dp,
-                                                            bottomEnd = 1000.dp,
-                                                            topStart = 4.dp,
-                                                            bottomStart = 4.dp,
-                                                        )
-                                                    doneAfter ->
-                                                        RoundedCornerShape(
-                                                            topStart = 1000.dp,
-                                                            bottomStart = 1000.dp,
-                                                            topEnd = 4.dp,
-                                                            bottomEnd = 4.dp,
-                                                        )
-                                                    else -> CircleShape
-                                                },
-                                        )
-                                    } else Modifier
-                                ),
+                                },
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(
-                            text = day.date.day.toString(),
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = if (done) FontWeight.Bold else FontWeight.Normal,
-                            color =
-                                if (done) primary
-                                else if (!validDate)
-                                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                                else MaterialTheme.colorScheme.onSurface,
-                        )
+                        if (done) {
+                            val donePrevious = day.date.minusDays(1) in doneDates
+                            val doneAfter = day.date.plusDays(1) in doneDates
+                            val streakPosition =
+                                when {
+                                    donePrevious && doneAfter -> StreakPosition.MIDDLE
+                                    donePrevious -> StreakPosition.END
+                                    doneAfter -> StreakPosition.START
+                                    else -> StreakPosition.ISOLATED
+                                }
+
+                            Box(
+                                modifier =
+                                    Modifier.fillMaxSize()
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primary,
+                                            shape =
+                                                calendarMapStreakShape(
+                                                    streakPosition = streakPosition,
+                                                    isFirstDayOfWeek =
+                                                        day.date.dayOfWeek == edgeWeeks.first(),
+                                                    isLastDayOfWeek =
+                                                        day.date.dayOfWeek == edgeWeeks.last(),
+                                                    isFirstDayOfMonth = day.date.day == 1,
+                                                    isLastDayOfMonth = day.date.plusDays(1).day == 1,
+                                                ),
+                                        ),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                val isStreakEnd =
+                                    streakPosition == StreakPosition.START ||
+                                        streakPosition == StreakPosition.END
+
+                                if (isStreakEnd) {
+                                    Box(
+                                        modifier =
+                                            Modifier.fillMaxSize()
+                                                .padding(2.dp)
+                                                .background(
+                                                    color = MaterialTheme.colorScheme.onPrimary,
+                                                    shape = CircleShape,
+                                                ),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(
+                                            text = day.date.day.toString(),
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = MaterialTheme.colorScheme.primary,
+                                        )
+                                    }
+                                } else {
+                                    Text(
+                                        text = day.date.day.toString(),
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                    )
+                                }
+                            }
+                        } else {
+                            Text(
+                                text = day.date.day.toString(),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color =
+                                    if (!validDate)
+                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                                    else MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
                     }
                 }
             },
