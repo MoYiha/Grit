@@ -44,7 +44,6 @@ Translations are done via weblate, you can contribute there!
 - [Loop Habit Tracker](https://github.com/iSoron/uhabits)
 - Kotlin and Jetpack Compose 🖤
 - Compose Multiplatform and Kotlin wasm for the Web Demo
-- [Compose Charts](https://github.com/ehsannarmani/ComposeCharts)
 - [Compose Reorderable](https://github.com/Calvin-LL/Reorderable)
 - [MaterialKolor](https://github.com/jordond/MaterialKolor)
 - [ColorPicker Compose](https://github.com/skydoves/colorpicker-compose)
