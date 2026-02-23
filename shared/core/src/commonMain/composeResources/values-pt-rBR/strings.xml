@@ -46,7 +46,7 @@
     <string name="edit_categories">Editar categorias de Tarefas</string>
     <string name="delete_category">Você tem certeza? Todas as tarefas nesta categoria serão deletadas</string>
     <string name="add_category">Adicionar Categoria</string>
-    <string name="add">Adicionar Item</string>
+    <string name="add">Adicione um Item</string>
     <string name="about">Sobre o App</string>
     <string name="select_habit">Selecionar Hábito</string>
     <string name="habit_map">Mapa de Calor do Hábito</string>
