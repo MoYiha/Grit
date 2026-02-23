@@ -105,7 +105,7 @@ fun HabitHeatMap(
                             Modifier.padding(start = 6.dp, top = 1.dp, bottom = 1.dp, end = 6.dp)
                                 .size(30.dp)
                                 .background(
-                                    color = MaterialTheme.colorScheme.secondaryContainer,
+                                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
                                     shape = CircleShape,
                                 )
                     ) {
@@ -113,7 +113,7 @@ fun HabitHeatMap(
                             text = dayOfWeek.name.take(1),
                             style =
                                 MaterialTheme.typography.labelSmall.copy(
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                                    color = MaterialTheme.colorScheme.onSurface
                                 ),
                             modifier = Modifier.align(Alignment.Center),
                         )
@@ -143,7 +143,7 @@ fun HabitHeatMap(
                                             year()
                                         }
                                     ),
-                                color = MaterialTheme.colorScheme.primary,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.align(Alignment.Center),
                             )
                         }
@@ -193,7 +193,7 @@ private fun Preview() {
                     firstDayOfWeek = DayOfWeek.MONDAY,
                 ),
             heatMapData =
-                (0..100).associate { it ->
+                (0..100).associate {
                     LocalDate.now().minus(it, DateTimeUnit.DAY) to Random.nextInt(0, 11)
                 },
             totalHabits = 10,

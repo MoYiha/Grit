@@ -39,7 +39,7 @@ fun provideTypography(font: FontResource? = Res.font.poppins_regular): Typograph
                 resource = Res.font.google_sans_flex,
                 variationSettings =
                     FontVariation.Settings(
-                        FontVariation.weight(1000),
+                        FontVariation.weight(900),
                         FontVariation.slant(-6f),
                         FontVariation.width(120f),
                     ),
