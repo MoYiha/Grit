@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2026  Shubham Gorai
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.shub39.grit.core.habits.presentation.ui.component
 
 import androidx.compose.foundation.background
@@ -25,34 +41,27 @@ import org.jetbrains.compose.resources.vectorResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun NotEnoughData(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier.fillMaxWidth().height(200.dp),
-        contentAlignment = Alignment.Center
-    ) {
+fun NotEnoughData(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.secondary,
-                        shape = MaterialShapes.Cookie6Sided.toShape()
-                    ),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier.size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.secondary,
+                            shape = MaterialShapes.Cookie6Sided.toShape(),
+                        ),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = vectorResource(Res.drawable.warning),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(18.dp),
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = stringResource(Res.string.not_enough_data)
-            )
+            Text(text = stringResource(Res.string.not_enough_data))
         }
     }
 }

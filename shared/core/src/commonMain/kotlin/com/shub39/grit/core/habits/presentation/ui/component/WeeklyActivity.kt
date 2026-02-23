@@ -60,9 +60,10 @@ import kotlin.random.Random
 @Composable
 fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
     var selectedTimePeriod by rememberSaveable { mutableStateOf(WeeklyTimePeriod.WEEKS_8) }
-    val max = remember(selectedTimePeriod, lineChartData) {
-        lineChartData.takeLast(selectedTimePeriod.toWeeks()).maxOrNull()
-    }
+    val max =
+        remember(selectedTimePeriod, lineChartData) {
+            lineChartData.takeLast(selectedTimePeriod.toWeeks()).maxOrNull()
+        }
 
     AnalyticsCard(
         title = stringResource(Res.string.weekly_graph),
@@ -72,7 +73,8 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
         if (max != null) {
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
+                horizontalArrangement =
+                    Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween),
             ) {
                 WeeklyTimePeriod.entries.forEach { period ->
                     ToggleButton(
@@ -99,7 +101,7 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                 verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 lineChartData.takeLast(selectedTimePeriod.toWeeks()).forEach { data ->
                     Column(
@@ -108,15 +110,15 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                         modifier = Modifier.weight(1f),
                     ) {
                         Box(
-                            modifier = Modifier
-                                .height(((data.toFloat() / max.toFloat()) *200).dp)
-                                .fillMaxWidth()
-                                .background(
-                                    color =
-                                        if (data == max) MaterialTheme.colorScheme.primary
-                                        else MaterialTheme.colorScheme.secondary,
-                                    shape = CircleShape,
-                                )
+                            modifier =
+                                Modifier.height(((data.toFloat() / max.toFloat()) * 200).dp)
+                                    .fillMaxWidth()
+                                    .background(
+                                        color =
+                                            if (data == max) MaterialTheme.colorScheme.primary
+                                            else MaterialTheme.colorScheme.secondary,
+                                        shape = CircleShape,
+                                    )
                         ) {
                             if (data == max) {
                                 Box(
@@ -137,7 +139,9 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                                         )
                                     }
                                 }
-                            } else if (data > (max / 2) && selectedTimePeriod != WeeklyTimePeriod.WEEKS_16) {
+                            } else if (
+                                data > (max / 2) && selectedTimePeriod != WeeklyTimePeriod.WEEKS_16
+                            ) {
                                 Box(
                                     modifier =
                                         Modifier.fillMaxWidth()
@@ -161,59 +165,61 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
             }
         } else NotEnoughData()
 
-//        LineChart(
-//            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-//            labelHelperProperties =
-//                LabelHelperProperties(
-//                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
-//                ),
-//            indicatorProperties =
-//                HorizontalIndicatorProperties(
-//                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
-//                ),
-//            dividerProperties =
-//                DividerProperties(
-//                    xAxisProperties = LineProperties(color = SolidColor(primary)),
-//                    yAxisProperties = LineProperties(color = SolidColor(primary)),
-//                ),
-//            gridProperties =
-//                GridProperties(
-//                    xAxisProperties =
-//                        GridProperties.AxisProperties(lineCount = 10, color = SolidColor(primary)),
-//                    yAxisProperties =
-//                        GridProperties.AxisProperties(lineCount = 7, color = SolidColor(primary)),
-//                ),
-//            data =
-//                listOf(
-//                    Line(
-//                        label = stringResource(Res.string.progress),
-//                        values = lineChartData.takeLast(selectedTimePeriod.toWeeks()),
-//                        color = SolidColor(primary),
-//                        dotProperties =
-//                            DotProperties(
-//                                enabled = true,
-//                                color = SolidColor(primary),
-//                                strokeWidth = 4.dp,
-//                                radius = 7.dp,
-//                                strokeColor = SolidColor(primary.copy(alpha = 0.5f)),
-//                            ),
-//                        popupProperties = PopupProperties(enabled = false),
-//                        drawStyle =
-//                            DrawStyle.Stroke(
-//                                width = 3.dp,
-//                                strokeStyle =
-//                                    StrokeStyle.Dashed(
-//                                        intervals = floatArrayOf(10f, 10f),
-//                                        phase = 15f,
-//                                    ),
-//                            ),
-//                    )
-//                ),
-//            maxValue = 7.0,
-//            minValue = 0.0,
-//            curvedEdges = false,
-//            animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
-//        )
+        //        LineChart(
+        //            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        //            labelHelperProperties =
+        //                LabelHelperProperties(
+        //                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
+        //                ),
+        //            indicatorProperties =
+        //                HorizontalIndicatorProperties(
+        //                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
+        //                ),
+        //            dividerProperties =
+        //                DividerProperties(
+        //                    xAxisProperties = LineProperties(color = SolidColor(primary)),
+        //                    yAxisProperties = LineProperties(color = SolidColor(primary)),
+        //                ),
+        //            gridProperties =
+        //                GridProperties(
+        //                    xAxisProperties =
+        //                        GridProperties.AxisProperties(lineCount = 10, color =
+        // SolidColor(primary)),
+        //                    yAxisProperties =
+        //                        GridProperties.AxisProperties(lineCount = 7, color =
+        // SolidColor(primary)),
+        //                ),
+        //            data =
+        //                listOf(
+        //                    Line(
+        //                        label = stringResource(Res.string.progress),
+        //                        values = lineChartData.takeLast(selectedTimePeriod.toWeeks()),
+        //                        color = SolidColor(primary),
+        //                        dotProperties =
+        //                            DotProperties(
+        //                                enabled = true,
+        //                                color = SolidColor(primary),
+        //                                strokeWidth = 4.dp,
+        //                                radius = 7.dp,
+        //                                strokeColor = SolidColor(primary.copy(alpha = 0.5f)),
+        //                            ),
+        //                        popupProperties = PopupProperties(enabled = false),
+        //                        drawStyle =
+        //                            DrawStyle.Stroke(
+        //                                width = 3.dp,
+        //                                strokeStyle =
+        //                                    StrokeStyle.Dashed(
+        //                                        intervals = floatArrayOf(10f, 10f),
+        //                                        phase = 15f,
+        //                                    ),
+        //                            ),
+        //                    )
+        //                ),
+        //            maxValue = 7.0,
+        //            minValue = 0.0,
+        //            curvedEdges = false,
+        //            animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
+        //        )
     }
 }
 
