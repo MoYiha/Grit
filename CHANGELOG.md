@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.7.0
+- Added flex fonts and typography
+- Redesigned Weekly comparison and week day breakdown charts
+- Extracted week day selection from reminders in habit create/edit sheet
+- Removed Weekly graph from overall analytics (looked messy)
+- Made keyboard animations smoother on editsheets #248
+
 ## 5.6.2
 - Fixed past reminders not working #241
 

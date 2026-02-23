@@ -33,28 +33,54 @@ val TYPOGRAPHY = Typography()
 
 @Composable
 fun provideTypography(font: FontResource? = Res.font.poppins_regular): Typography {
-    val flexFontDisplay = FontFamily(
-        Font(
-            resource = Res.font.google_sans_flex,
-            variationSettings = FontVariation.Settings(
-                FontVariation.weight(1000),
-                FontVariation.slant(-6f),
-                FontVariation.width(120f)
+    val flexFontDisplay =
+        FontFamily(
+            Font(
+                resource = Res.font.google_sans_flex,
+                variationSettings =
+                    FontVariation.Settings(
+                        FontVariation.weight(1000),
+                        FontVariation.slant(-6f),
+                        FontVariation.width(120f),
+                    ),
             )
         )
-    )
+    val flexFontHeadline =
+        FontFamily(
+            Font(
+                resource = Res.font.google_sans_flex,
+                variationSettings =
+                    FontVariation.Settings(
+                        FontVariation.weight(900),
+                        FontVariation.slant(-6f),
+                        FontVariation.width(120f),
+                    ),
+            )
+        )
+    val flexFontTitle =
+        FontFamily(
+            Font(
+                resource = Res.font.google_sans_flex,
+                variationSettings =
+                    FontVariation.Settings(
+                        FontVariation.weight(800),
+                        FontVariation.slant(-6f),
+                        FontVariation.width(120f),
+                    ),
+            )
+        )
     val selectedFont = font?.let { FontFamily(Font(font)) } ?: FontFamily.Default
 
     return Typography(
         displayLarge = TYPOGRAPHY.displayLarge.copy(fontFamily = flexFontDisplay),
         displayMedium = TYPOGRAPHY.displayMedium.copy(fontFamily = flexFontDisplay),
         displaySmall = TYPOGRAPHY.displaySmall.copy(fontFamily = flexFontDisplay),
-        headlineLarge = TYPOGRAPHY.headlineLarge.copy(fontFamily = flexFontDisplay),
-        headlineMedium = TYPOGRAPHY.headlineMedium.copy(fontFamily = flexFontDisplay),
-        headlineSmall = TYPOGRAPHY.headlineSmall.copy(fontFamily = flexFontDisplay),
-        titleLarge = TYPOGRAPHY.titleLarge.copy(fontFamily = flexFontDisplay),
-        titleMedium = TYPOGRAPHY.titleMedium.copy(fontFamily = flexFontDisplay),
-        titleSmall = TYPOGRAPHY.titleSmall.copy(fontFamily = flexFontDisplay),
+        headlineLarge = TYPOGRAPHY.headlineLarge.copy(fontFamily = flexFontHeadline),
+        headlineMedium = TYPOGRAPHY.headlineMedium.copy(fontFamily = flexFontHeadline),
+        headlineSmall = TYPOGRAPHY.headlineSmall.copy(fontFamily = flexFontHeadline),
+        titleLarge = TYPOGRAPHY.titleLarge.copy(fontFamily = flexFontTitle),
+        titleMedium = TYPOGRAPHY.titleMedium.copy(fontFamily = flexFontTitle),
+        titleSmall = TYPOGRAPHY.titleSmall.copy(fontFamily = flexFontTitle),
         bodyLarge = TYPOGRAPHY.bodyLarge.copy(fontFamily = selectedFont),
         bodyMedium = TYPOGRAPHY.bodyMedium.copy(fontFamily = selectedFont),
         bodySmall = TYPOGRAPHY.bodySmall.copy(fontFamily = selectedFont),

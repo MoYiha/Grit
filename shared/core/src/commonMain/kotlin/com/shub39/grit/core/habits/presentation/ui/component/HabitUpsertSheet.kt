@@ -251,7 +251,6 @@ fun HabitUpsertSheetContent(
                 }
             }
 
-
             if (newHabit.reminder) {
                 item {
                     Row(

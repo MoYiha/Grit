@@ -52,9 +52,9 @@ import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.chart_data
 import grit.shared.core.generated.resources.weekly_graph
 import grit.shared.core.generated.resources.weeks
-import org.jetbrains.compose.resources.stringResource
 import kotlin.math.roundToInt
 import kotlin.random.Random
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -167,62 +167,6 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                 }
             }
         } else NotEnoughData()
-
-        //        LineChart(
-        //            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-        //            labelHelperProperties =
-        //                LabelHelperProperties(
-        //                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
-        //                ),
-        //            indicatorProperties =
-        //                HorizontalIndicatorProperties(
-        //                    textStyle = MaterialTheme.typography.bodyMedium.copy(color = primary)
-        //                ),
-        //            dividerProperties =
-        //                DividerProperties(
-        //                    xAxisProperties = LineProperties(color = SolidColor(primary)),
-        //                    yAxisProperties = LineProperties(color = SolidColor(primary)),
-        //                ),
-        //            gridProperties =
-        //                GridProperties(
-        //                    xAxisProperties =
-        //                        GridProperties.AxisProperties(lineCount = 10, color =
-        // SolidColor(primary)),
-        //                    yAxisProperties =
-        //                        GridProperties.AxisProperties(lineCount = 7, color =
-        // SolidColor(primary)),
-        //                ),
-        //            data =
-        //                listOf(
-        //                    Line(
-        //                        label = stringResource(Res.string.progress),
-        //                        values = lineChartData.takeLast(selectedTimePeriod.toWeeks()),
-        //                        color = SolidColor(primary),
-        //                        dotProperties =
-        //                            DotProperties(
-        //                                enabled = true,
-        //                                color = SolidColor(primary),
-        //                                strokeWidth = 4.dp,
-        //                                radius = 7.dp,
-        //                                strokeColor = SolidColor(primary.copy(alpha = 0.5f)),
-        //                            ),
-        //                        popupProperties = PopupProperties(enabled = false),
-        //                        drawStyle =
-        //                            DrawStyle.Stroke(
-        //                                width = 3.dp,
-        //                                strokeStyle =
-        //                                    StrokeStyle.Dashed(
-        //                                        intervals = floatArrayOf(10f, 10f),
-        //                                        phase = 15f,
-        //                                    ),
-        //                            ),
-        //                    )
-        //                ),
-        //            maxValue = 7.0,
-        //            minValue = 0.0,
-        //            curvedEdges = false,
-        //            animationMode = AnimationMode.Together(delayBuilder = { it * 500L }),
-        //        )
     }
 }
 

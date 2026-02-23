@@ -4,7 +4,6 @@ compileSdk = "36"
 minSdk = "29"
 targetSdk = "36"
 calendar = "2.10.0"
-compose-charts = "0.2.5"
 espresso-core = "3.7.0"
 junit = "4.13.2"
 junit-version = "1.3.0"
@@ -76,7 +75,6 @@ reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reo
 materialkolor = { module = "com.materialkolor:material-kolor", version.ref = "materialkolor" }
 colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 calendar = { module = "com.kizitonwose.calendar:compose-multiplatform", version.ref = "calendar" }
-compose-charts = { module = "io.github.ehsannarmani:compose-charts", version.ref = "compose-charts" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }

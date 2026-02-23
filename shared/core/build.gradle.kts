@@ -61,7 +61,6 @@ kotlin {
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.reorderable)
-            implementation(libs.compose.charts)
             implementation(libs.calendar)
             implementation(libs.materialkolor)
         }

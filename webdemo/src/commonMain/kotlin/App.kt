@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -47,6 +48,7 @@ import com.materialkolor.PaletteStyle
 import com.shub39.grit.core.habits.presentation.ui.HabitsGraph
 import com.shub39.grit.core.tasks.presentation.ui.TasksPage
 import com.shub39.grit.core.theme.AppTheme
+import com.shub39.grit.core.theme.Fonts
 import com.shub39.grit.core.theme.GritTheme
 import com.shub39.grit.core.theme.Theme
 import com.shub39.grit.core.utils.LocalWindowSizeClass
@@ -92,10 +94,13 @@ fun App() {
     val windowSizeClass = LocalWindowSizeClass.current
 
     GritTheme(
-        theme = Theme(
-            appTheme = if (isDark) AppTheme.DARK else AppTheme.LIGHT,
-            paletteStyle = PaletteStyle.Expressive
-        )
+        theme =
+            Theme(
+                appTheme = if (isDark) AppTheme.DARK else AppTheme.LIGHT,
+                paletteStyle = PaletteStyle.FruitSalad,
+                seedColor = Color(0x002A66),
+                font = Fonts.FIGTREE,
+            )
     ) {
         when (windowSizeClass.widthSizeClass) {
             WindowWidthSizeClass.Compact -> {

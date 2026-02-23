@@ -43,10 +43,10 @@ import com.shub39.grit.core.utils.AllPreviews
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.view_day
 import grit.shared.core.generated.resources.week_breakdown
-import kotlinx.datetime.format.DayOfWeekNames
-import org.jetbrains.compose.resources.stringResource
 import kotlin.random.Random
 import kotlin.random.nextInt
+import kotlinx.datetime.format.DayOfWeekNames
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable

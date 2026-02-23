@@ -167,7 +167,7 @@ fun HabitCard(
                     Text(
                         text = habitWithAnalytics.habit.title,
                         maxLines = 1,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.basicMarquee(),
                     )
                 }
