@@ -56,7 +56,7 @@ fun WeekDayBreakdown(
     onNavigateToPaywall: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val max = weekDayData.values.maxOrNull()
+    val max = weekDayData.values.takeIf { it.any { value -> value != 0 } }?.maxOrNull()
 
     AnalyticsCard(
         title = stringResource(Res.string.week_breakdown),

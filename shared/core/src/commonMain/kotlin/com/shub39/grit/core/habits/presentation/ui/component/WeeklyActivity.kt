@@ -62,7 +62,10 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
     var selectedTimePeriod by rememberSaveable { mutableStateOf(WeeklyTimePeriod.WEEKS_8) }
     val max =
         remember(selectedTimePeriod, lineChartData) {
-            lineChartData.takeLast(selectedTimePeriod.toWeeks()).maxOrNull()
+            lineChartData
+                .takeLast(selectedTimePeriod.toWeeks())
+                .takeIf { it.any { value -> value != 0.0 } }
+                ?.maxOrNull()
         }
 
     AnalyticsCard(

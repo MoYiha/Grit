@@ -132,21 +132,11 @@ class HabitRepository(
 
     override fun getOverallAnalytics(): Flow<OverallAnalytics> {
         return habits
-            .combine(habitStatuses) { habitsFlow, habitStatusesFlow ->
+            .combine(habitStatuses) { _, habitStatusesFlow ->
                 OverallAnalytics(
                     heatMapData = prepareHeatMapData(habitStatusesFlow),
                     weekDayFrequencyData =
                         prepareWeekDayFrequencyData(habitStatusesFlow.map { it.date }),
-                    weeklyGraphData =
-                        habitsFlow.associateWith { habit ->
-                            val habitStatusesForHabit =
-                                habitStatusesFlow.filter { it.habitId == habit.id }
-
-                            prepareLineChartData(
-                                firstDay = firstDayOfWeek.value,
-                                habitStatuses = habitStatusesForHabit,
-                            )
-                        },
                 )
             }
             .flowOn(Dispatchers.Default)
