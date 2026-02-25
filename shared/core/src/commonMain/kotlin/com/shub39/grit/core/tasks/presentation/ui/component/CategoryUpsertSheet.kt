@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.shared_ui.GritBottomSheet
 import com.shub39.grit.core.tasks.domain.Category
+import com.shub39.grit.core.theme.flexFontBold
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.add
 import grit.shared.core.generated.resources.add_category
@@ -90,8 +91,10 @@ fun CategoryUpsertSheet(
                 stringResource(
                     if (isEditSheet) Res.string.edit_categories else Res.string.add_category
                 ),
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineSmall.copy(
+                textAlign = TextAlign.Center,
+                fontFamily = flexFontBold()
+            ),
         )
         HorizontalDivider()
 

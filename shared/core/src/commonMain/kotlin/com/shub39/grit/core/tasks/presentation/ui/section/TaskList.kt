@@ -91,6 +91,8 @@ import com.shub39.grit.core.tasks.presentation.TaskState
 import com.shub39.grit.core.tasks.presentation.ui.component.CategoryUpsertSheet
 import com.shub39.grit.core.tasks.presentation.ui.component.TaskCard
 import com.shub39.grit.core.tasks.presentation.ui.component.TaskUpsertSheet
+import com.shub39.grit.core.theme.flexFontEmphasis
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.add
@@ -270,10 +272,11 @@ private fun TaskListTopBar(
                 scrolledContainerColor = MaterialTheme.colorScheme.surface
             ),
         scrollBehavior = scrollBehavior,
-        title = { Text(text = stringResource(Res.string.tasks)) },
+        title = { Text(text = stringResource(Res.string.tasks), fontFamily = flexFontEmphasis()) },
         subtitle = {
             Text(
-                text = "${state.completedTasks.size} " + stringResource(Res.string.items_completed)
+                text = "${state.completedTasks.size} " + stringResource(Res.string.items_completed),
+                fontFamily = flexFontRounded()
             )
         },
         actions = {

@@ -16,7 +16,9 @@
  */
 package com.shub39.grit.core.tasks.presentation.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -36,6 +39,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -46,6 +50,7 @@ import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -65,6 +70,7 @@ import com.shub39.grit.core.shared_ui.GritBottomSheet
 import com.shub39.grit.core.shared_ui.GritTimePicker
 import com.shub39.grit.core.tasks.domain.Category
 import com.shub39.grit.core.tasks.domain.Task
+import com.shub39.grit.core.theme.flexFontBold
 import com.shub39.grit.core.utils.now
 import com.shub39.grit.core.utils.toFormattedString
 import grit.shared.core.generated.resources.Res
@@ -138,17 +144,29 @@ fun TaskUpsertSheetContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Icon(
-                imageVector =
-                    vectorResource(if (isEditSheet) Res.drawable.edit else Res.drawable.add),
-                contentDescription = "Upsert",
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.size(50.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        shape = MaterialShapes.VerySunny.toShape()
+                    )
+            ) {
+                Icon(
+                    imageVector =
+                        vectorResource(if (isEditSheet) Res.drawable.edit else Res.drawable.add),
+                    contentDescription = "Upsert",
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
 
             Text(
                 text =
                     stringResource(if (isEditSheet) Res.string.edit_task else Res.string.add_task),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    textAlign = TextAlign.Center,
+                    fontFamily = flexFontBold()
+                ),
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
