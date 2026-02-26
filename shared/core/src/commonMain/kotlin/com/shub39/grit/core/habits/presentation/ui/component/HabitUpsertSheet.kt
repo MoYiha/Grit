@@ -16,13 +16,16 @@
  */
 package com.shub39.grit.core.habits.presentation.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -32,6 +35,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
@@ -39,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +60,7 @@ import com.shub39.grit.core.habits.domain.Habit
 import com.shub39.grit.core.shared_ui.GritBottomSheet
 import com.shub39.grit.core.shared_ui.GritTimePicker
 import com.shub39.grit.core.theme.GritTheme
+import com.shub39.grit.core.theme.flexFontBold
 import com.shub39.grit.core.utils.now
 import com.shub39.grit.core.utils.toFormattedString
 import grit.shared.core.generated.resources.Res
@@ -109,15 +115,31 @@ fun HabitUpsertSheetContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Icon(imageVector = vectorResource(Res.drawable.edit), contentDescription = "Edit Habit")
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier =
+                    Modifier.size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = MaterialShapes.VerySunny.toShape(),
+                        ),
+            ) {
+                Icon(
+                    imageVector = vectorResource(Res.drawable.edit),
+                    contentDescription = "Edit Habit",
+                )
+            }
 
             Text(
                 text =
                     stringResource(
                         if (isEditSheet) Res.string.edit_habit else Res.string.add_habit
                     ),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Center,
+                style =
+                    MaterialTheme.typography.headlineSmall.copy(
+                        textAlign = TextAlign.Center,
+                        fontFamily = flexFontBold(),
+                    ),
             )
 
             HorizontalDivider()
@@ -230,7 +252,8 @@ fun HabitUpsertSheetContent(
                 ) {
                     Text(
                         text = stringResource(Res.string.add_reminder),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style =
+                            MaterialTheme.typography.titleLarge.copy(fontFamily = flexFontBold(0f)),
                         modifier = Modifier.weight(1f),
                     )
 
@@ -249,10 +272,8 @@ fun HabitUpsertSheetContent(
                         },
                     )
                 }
-            }
 
-            if (newHabit.reminder) {
-                item {
+                if (newHabit.reminder) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -269,7 +290,7 @@ fun HabitUpsertSheetContent(
 
                             Text(
                                 text = newHabit.time.time.toFormattedString(is24Hr = is24Hr),
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = MaterialTheme.typography.titleMedium,
                             )
                         }
 

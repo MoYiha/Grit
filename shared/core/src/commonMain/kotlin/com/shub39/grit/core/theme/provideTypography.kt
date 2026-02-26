@@ -44,6 +44,7 @@ fun flexFontEmphasis(slant: Float = -6f): FontFamily =
                 ),
         )
     )
+
 @Composable
 fun flexFontBold(slant: Float = -6f): FontFamily =
     FontFamily(
@@ -57,6 +58,7 @@ fun flexFontBold(slant: Float = -6f): FontFamily =
                 ),
         )
     )
+
 @Composable
 fun flexFontRounded(): FontFamily =
     FontFamily(

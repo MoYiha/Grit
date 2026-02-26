@@ -23,10 +23,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -71,12 +73,14 @@ import com.shub39.grit.core.shared_ui.GritTimePicker
 import com.shub39.grit.core.tasks.domain.Category
 import com.shub39.grit.core.tasks.domain.Task
 import com.shub39.grit.core.theme.flexFontBold
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.now
 import com.shub39.grit.core.utils.toFormattedString
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.add
 import grit.shared.core.generated.resources.add_reminder
 import grit.shared.core.generated.resources.add_task
+import grit.shared.core.generated.resources.alarm
 import grit.shared.core.generated.resources.delete
 import grit.shared.core.generated.resources.done
 import grit.shared.core.generated.resources.edit
@@ -146,27 +150,29 @@ fun TaskUpsertSheetContent(
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(50.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                        shape = MaterialShapes.VerySunny.toShape()
-                    )
+                modifier =
+                    Modifier.size(50.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            shape = MaterialShapes.VerySunny.toShape(),
+                        ),
             ) {
                 Icon(
                     imageVector =
                         vectorResource(if (isEditSheet) Res.drawable.edit else Res.drawable.add),
                     contentDescription = "Upsert",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             }
 
             Text(
                 text =
                     stringResource(if (isEditSheet) Res.string.edit_task else Res.string.add_task),
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    textAlign = TextAlign.Center,
-                    fontFamily = flexFontBold()
-                ),
+                style =
+                    MaterialTheme.typography.headlineSmall.copy(
+                        textAlign = TextAlign.Center,
+                        fontFamily = flexFontBold(),
+                    ),
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
@@ -229,24 +235,39 @@ fun TaskUpsertSheetContent(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    Icon(
+                        imageVector = vectorResource(Res.drawable.alarm),
+                        contentDescription = null,
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = stringResource(Res.string.add_reminder),
-                            style = MaterialTheme.typography.bodyLarge,
+                            style =
+                                MaterialTheme.typography.titleLarge.copy(
+                                    fontFamily = flexFontBold(0f)
+                                ),
                         )
 
                         if (newTask.reminder != null) {
                             Text(
                                 text = newTask.reminder!!.toFormattedString(is24Hr = is24Hr),
-                                style = MaterialTheme.typography.bodySmall,
+                                style =
+                                    MaterialTheme.typography.bodySmall.copy(
+                                        fontFamily = flexFontRounded()
+                                    ),
                             )
                         }
 
                         if (!isValidDateTime) {
                             Text(
                                 text = stringResource(Res.string.invalid_date_time),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.error,
+                                style =
+                                    MaterialTheme.typography.bodySmall.copy(
+                                        fontFamily = flexFontRounded(),
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
                             )
                         }
                     }

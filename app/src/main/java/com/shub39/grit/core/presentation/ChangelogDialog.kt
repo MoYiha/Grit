@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.domain.VersionEntry
+import com.shub39.grit.core.theme.flexFontBold
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.changelog
 import grit.shared.core.generated.resources.done
@@ -57,7 +58,7 @@ fun ChangelogDialog(
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = stringResource(Res.string.changelog),
-                    style = MaterialTheme.typography.displaySmall,
+                    style = MaterialTheme.typography.displaySmall.copy(fontFamily = flexFontBold()),
                 )
                 Text(text = currentLog.version, style = MaterialTheme.typography.titleLarge)
             }

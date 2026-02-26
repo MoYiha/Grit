@@ -40,9 +40,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.blurPossible
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.unlock_plus
@@ -88,7 +88,7 @@ fun AnalyticsCard(
                 text = title,
                 style =
                     MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.Bold,
+                        fontFamily = flexFontRounded(),
                         color = MaterialTheme.colorScheme.primary,
                     ),
                 maxLines = 1,

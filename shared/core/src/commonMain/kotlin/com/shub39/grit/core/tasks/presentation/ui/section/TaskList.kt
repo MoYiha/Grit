@@ -91,6 +91,7 @@ import com.shub39.grit.core.tasks.presentation.TaskState
 import com.shub39.grit.core.tasks.presentation.ui.component.CategoryUpsertSheet
 import com.shub39.grit.core.tasks.presentation.ui.component.TaskCard
 import com.shub39.grit.core.tasks.presentation.ui.component.TaskUpsertSheet
+import com.shub39.grit.core.theme.flexFontBold
 import com.shub39.grit.core.theme.flexFontEmphasis
 import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.LocalWindowSizeClass
@@ -276,7 +277,7 @@ private fun TaskListTopBar(
         subtitle = {
             Text(
                 text = "${state.completedTasks.size} " + stringResource(Res.string.items_completed),
-                fontFamily = flexFontRounded()
+                fontFamily = flexFontRounded(),
             )
         },
         actions = {
@@ -547,7 +548,10 @@ private fun ExpandedTasksView(
                         ) {
                             Text(
                                 text = category.name,
-                                style = MaterialTheme.typography.titleLarge,
+                                style =
+                                    MaterialTheme.typography.headlineSmall.copy(
+                                        fontFamily = flexFontBold()
+                                    ),
                                 modifier = Modifier.padding(end = 8.dp).weight(1f),
                             )
 

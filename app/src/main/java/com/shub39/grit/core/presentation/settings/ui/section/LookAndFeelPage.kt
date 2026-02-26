@@ -82,6 +82,7 @@ import com.shub39.grit.core.theme.Fonts.Companion.toDisplayString
 import com.shub39.grit.core.theme.Fonts.Companion.toFontRes
 import com.shub39.grit.core.theme.GritTheme
 import com.shub39.grit.core.theme.Theme
+import com.shub39.grit.core.theme.flexFontEmphasis
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.app_theme
 import grit.shared.core.generated.resources.arrow_back
@@ -119,7 +120,12 @@ fun LookAndFeelPage(
     Column(modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)) {
         MediumFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = stringResource(Res.string.look_and_feel)) },
+            title = {
+                Text(
+                    text = stringResource(Res.string.look_and_feel),
+                    fontFamily = flexFontEmphasis(),
+                )
+            },
             navigationIcon = {
                 IconButton(onClick = onNavigateBack) {
                     Icon(

@@ -44,6 +44,7 @@ import com.kizitonwose.calendar.core.now
 import com.shub39.grit.core.habits.presentation.HabitState
 import com.shub39.grit.core.habits.presentation.ui.component.HabitHeatMap
 import com.shub39.grit.core.habits.presentation.ui.component.WeekDayBreakdown
+import com.shub39.grit.core.theme.flexFontEmphasis
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.arrow_back
@@ -87,7 +88,12 @@ fun OverallAnalytics(
                     scrolledContainerColor = Color.Transparent,
                     containerColor = Color.Transparent,
                 ),
-            title = { Text(text = stringResource(Res.string.overall_analytics)) },
+            title = {
+                Text(
+                    text = stringResource(Res.string.overall_analytics),
+                    fontFamily = flexFontEmphasis(),
+                )
+            },
             windowInsets =
                 if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
                     WindowInsets(0)
