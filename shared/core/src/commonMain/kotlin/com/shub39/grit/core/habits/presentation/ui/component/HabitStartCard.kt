@@ -17,6 +17,7 @@
 package com.shub39.grit.core.habits.presentation.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,10 +38,10 @@ import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.habits.presentation.formatDateWithOrdinal
 import com.shub39.grit.core.theme.GritTheme
+import com.shub39.grit.core.theme.flexFontBold
 import com.shub39.grit.core.utils.AllPreviews
 import com.shub39.grit.core.utils.now
 import grit.shared.core.generated.resources.Res
@@ -95,7 +96,10 @@ fun HabitStartCard(date: LocalDate, startedDaysAgo: Long, modifier: Modifier = M
                 )
                 Text(
                     text = formatDateWithOrdinal(date),
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                    style =
+                        MaterialTheme.typography.headlineMedium.copy(fontFamily = flexFontBold()),
+                    maxLines = 1,
+                    modifier = Modifier.basicMarquee(),
                 )
                 Text(
                     text = stringResource(Res.string.days_ago_format, startedDaysAgo),

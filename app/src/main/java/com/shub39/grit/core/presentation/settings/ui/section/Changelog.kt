@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.domain.Changelog
 import com.shub39.grit.core.domain.VersionEntry
 import com.shub39.grit.core.theme.GritTheme
+import com.shub39.grit.core.theme.flexFontBold
+import com.shub39.grit.core.theme.flexFontEmphasis
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.arrow_back
 import grit.shared.core.generated.resources.changelog
@@ -58,7 +60,12 @@ fun Changelog(modifier: Modifier = Modifier, changelog: Changelog, onNavigateBac
         topBar = {
             MediumFlexibleTopAppBar(
                 scrollBehavior = scrollBehavior,
-                title = { Text(text = stringResource(Res.string.changelog)) },
+                title = {
+                    Text(
+                        text = stringResource(Res.string.changelog),
+                        fontFamily = flexFontEmphasis(),
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
@@ -85,9 +92,7 @@ fun Changelog(modifier: Modifier = Modifier, changelog: Changelog, onNavigateBac
                     Text(
                         text = versionEntry.version,
                         style =
-                            MaterialTheme.typography.headlineLarge.copy(
-                                fontWeight = FontWeight.Bold
-                            ),
+                            MaterialTheme.typography.headlineLarge.copy(fontFamily = flexFontBold()),
                     )
                 }
 

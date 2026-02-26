@@ -66,6 +66,8 @@ import com.shub39.grit.core.habits.presentation.ui.component.WeekDayBreakdown
 import com.shub39.grit.core.habits.presentation.ui.component.WeeklyActivity
 import com.shub39.grit.core.habits.presentation.ui.component.WeeklyBooleanHeatMap
 import com.shub39.grit.core.shared_ui.GritDialog
+import com.shub39.grit.core.theme.flexFontEmphasis
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.arrow_back
@@ -127,13 +129,14 @@ fun AnalyticsPage(
                     scrolledContainerColor = Color.Transparent,
                     containerColor = Color.Transparent,
                 ),
-            title = { Text(text = currentHabit.habit.title) },
+            title = { Text(text = currentHabit.habit.title, fontFamily = flexFontEmphasis()) },
             subtitle = {
                 if (currentHabit.habit.description.isNotEmpty()) {
                     Text(
                         text = currentHabit.habit.description,
                         maxLines = 1,
                         modifier = Modifier.basicMarquee(),
+                        fontFamily = flexFontRounded(),
                     )
                 }
             },

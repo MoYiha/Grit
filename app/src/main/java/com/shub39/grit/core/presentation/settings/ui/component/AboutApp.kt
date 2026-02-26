@@ -36,9 +36,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.BuildConfig
+import com.shub39.grit.core.theme.flexFontEmphasis
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.bmc
 import grit.shared.core.generated.resources.buymeacoffee
@@ -77,8 +77,8 @@ fun AboutApp() {
             Column {
                 Text(
                     text = "Grit",
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold,
+                    style =
+                        MaterialTheme.typography.headlineLarge.copy(fontFamily = flexFontEmphasis()),
                 )
                 Text(text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
             }

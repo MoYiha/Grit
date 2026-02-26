@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.7.1
+- Isolated flex typography to uses, Fixing overflow wrapping #250
+
 ## 5.7.0
 - Added flex fonts and typography
 - Redesigned Weekly comparison and week day breakdown charts

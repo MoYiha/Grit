@@ -61,6 +61,7 @@ import com.shub39.grit.core.presentation.settings.ui.component.listItemColors
 import com.shub39.grit.core.theme.AppTheme
 import com.shub39.grit.core.theme.GritTheme
 import com.shub39.grit.core.theme.Theme
+import com.shub39.grit.core.theme.flexFontEmphasis
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.arrow_back
 import grit.shared.core.generated.resources.backup
@@ -97,7 +98,9 @@ fun BackupPage(
     Column(modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)) {
         MediumFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = stringResource(Res.string.backup)) },
+            title = {
+                Text(text = stringResource(Res.string.backup), fontFamily = flexFontEmphasis())
+            },
             navigationIcon = {
                 IconButton(onClick = onNavigateBack) {
                     Icon(

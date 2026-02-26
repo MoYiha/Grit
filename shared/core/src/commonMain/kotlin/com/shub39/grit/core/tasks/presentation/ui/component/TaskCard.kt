@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shub39.grit.core.tasks.domain.Task
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.toFormattedString
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.alarm
@@ -110,7 +111,11 @@ fun TaskCard(
 
                         Text(
                             text = task.reminder.toFormattedString(is24Hr),
-                            style = MaterialTheme.typography.labelSmall.copy(fontSize = 11.sp),
+                            style =
+                                MaterialTheme.typography.labelSmall.copy(
+                                    fontSize = 11.sp,
+                                    fontFamily = flexFontRounded(),
+                                ),
                         )
                     }
                 }

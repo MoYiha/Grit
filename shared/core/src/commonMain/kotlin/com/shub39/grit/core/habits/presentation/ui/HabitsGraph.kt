@@ -59,6 +59,8 @@ import com.shub39.grit.core.habits.presentation.ui.sections.AnalyticsPage
 import com.shub39.grit.core.habits.presentation.ui.sections.HabitsList
 import com.shub39.grit.core.habits.presentation.ui.sections.OverallAnalytics
 import com.shub39.grit.core.shared_ui.PageFill
+import com.shub39.grit.core.theme.flexFontEmphasis
+import com.shub39.grit.core.theme.flexFontRounded
 import com.shub39.grit.core.utils.LocalWindowSizeClass
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.collapse
@@ -243,13 +245,14 @@ private fun HabitsTopAppBar(
             TopAppBarDefaults.topAppBarColors(
                 scrolledContainerColor = MaterialTheme.colorScheme.surface
             ),
-        title = { Text(text = stringResource(Res.string.habits)) },
+        title = { Text(text = stringResource(Res.string.habits), fontFamily = flexFontEmphasis()) },
         subtitle = {
             Column {
                 Text(
                     text =
                         "${state.completedHabitIds.size}/${state.habitsWithAnalytics.size} " +
-                            stringResource(Res.string.completed)
+                            stringResource(Res.string.completed),
+                    fontFamily = flexFontRounded(),
                 )
             }
         },

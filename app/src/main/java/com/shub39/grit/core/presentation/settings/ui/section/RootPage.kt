@@ -46,7 +46,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.domain.Sections
 import com.shub39.grit.core.presentation.getRandomLine
@@ -58,6 +57,9 @@ import com.shub39.grit.core.presentation.settings.ui.component.endItemShape
 import com.shub39.grit.core.presentation.settings.ui.component.leadingItemShape
 import com.shub39.grit.core.presentation.settings.ui.component.listItemColors
 import com.shub39.grit.core.presentation.settings.ui.component.middleItemShape
+import com.shub39.grit.core.theme.flexFontBold
+import com.shub39.grit.core.theme.flexFontEmphasis
+import com.shub39.grit.core.theme.flexFontRounded
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.add
 import grit.shared.core.generated.resources.arrow_forward
@@ -104,8 +106,10 @@ fun RootPage(
     Column(modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection).fillMaxSize()) {
         LargeFlexibleTopAppBar(
             scrollBehavior = scrollBehavior,
-            title = { Text(text = stringResource(Res.string.settings)) },
-            subtitle = { Text(text = getRandomLine()) },
+            title = {
+                Text(text = stringResource(Res.string.settings), fontFamily = flexFontEmphasis())
+            },
+            subtitle = { Text(text = getRandomLine(), fontFamily = flexFontRounded()) },
             colors =
                 TopAppBarDefaults.topAppBarColors(
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
@@ -142,8 +146,10 @@ fun RootPage(
 
                         Text(
                             text = stringResource(Res.string.grit_plus),
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
+                            style =
+                                MaterialTheme.typography.headlineSmall.copy(
+                                    fontFamily = flexFontBold()
+                                ),
                         )
 
                         Spacer(modifier = Modifier.weight(1f))

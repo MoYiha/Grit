@@ -49,9 +49,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shub39.grit.core.theme.GritTheme
+import com.shub39.grit.core.theme.flexFontBold
 import com.shub39.grit.core.utils.AllPreviews
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.best_streak
@@ -144,7 +144,10 @@ fun HabitStreakCard(currentStreak: Int, bestStreak: Int, modifier: Modifier = Mo
                     Text(
                         text = currentStreak.toString(),
                         style =
-                            MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                            MaterialTheme.typography.headlineMedium.copy(
+                                fontFamily = flexFontBold()
+                            ),
+                        maxLines = 1
                     )
                     Text(
                         text = stringResource(Res.string.best_streak, bestStreak),
