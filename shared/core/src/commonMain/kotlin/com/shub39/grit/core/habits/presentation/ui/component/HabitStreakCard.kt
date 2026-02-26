@@ -147,6 +147,7 @@ fun HabitStreakCard(currentStreak: Int, bestStreak: Int, modifier: Modifier = Mo
                             MaterialTheme.typography.headlineMedium.copy(
                                 fontFamily = flexFontBold()
                             ),
+                        maxLines = 1
                     )
                     Text(
                         text = stringResource(Res.string.best_streak, bestStreak),

@@ -98,6 +98,7 @@ fun HabitStartCard(date: LocalDate, startedDaysAgo: Long, modifier: Modifier = M
                     text = formatDateWithOrdinal(date),
                     style =
                         MaterialTheme.typography.headlineMedium.copy(fontFamily = flexFontBold()),
+                    maxLines = 1,
                     modifier = Modifier.basicMarquee(),
                 )
                 Text(
