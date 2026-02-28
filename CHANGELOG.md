@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.7.2
+- Habits overview widget now only displays set habits for the day #253
+
 ## 5.7.1
 - Isolated flex typography to uses, Fixing overflow wrapping #250
 

@@ -127,7 +127,7 @@ fun HabitUpsertSheetContent(
                 Icon(
                     imageVector = vectorResource(Res.drawable.edit),
                     contentDescription = "Edit Habit",
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             }
 
