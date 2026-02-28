@@ -89,7 +89,10 @@ class HabitOverviewWidget : GlanceAppWidget(), KoinComponent {
             key(size) {
                 GlanceTheme {
                     Content(
-                        habitsWithStatus = habits,
+                        habitsWithStatus =
+                            habits.filter {
+                                it.first.days.any { day -> day == LocalDate.now().dayOfWeek }
+                            },
                         onUpdateHabit = { habitWithStatus ->
                             scope.launch {
                                 if (habitWithStatus.second) {
