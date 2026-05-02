@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions.Companion.Default
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.Icon
@@ -44,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -70,6 +73,12 @@ fun CategoryUpsertSheet(
     onUpsertCategory: (Category) -> Unit,
 ) {
     var newCategory by remember { mutableStateOf(category) }
+
+    val textFieldState =
+        rememberTextFieldState(
+            initialText = newCategory.name,
+            initialSelection = TextRange(newCategory.name.length),
+        )
 
     GritBottomSheet(
         modifier = modifier.imePadding(),
@@ -114,8 +123,8 @@ fun CategoryUpsertSheet(
             )
 
             OutlinedTextField(
-                value = newCategory.name,
-                onValueChange = { newCategory = newCategory.copy(name = it) },
+                state = textFieldState,
+                lineLimits = TextFieldLineLimits.SingleLine,
                 shape = MaterialTheme.shapes.medium,
                 keyboardOptions =
                     Default.copy(
@@ -123,19 +132,20 @@ fun CategoryUpsertSheet(
                         imeAction = ImeAction.Done,
                     ),
                 placeholder = { Text(text = stringResource(Res.string.add_category)) },
-                singleLine = true,
                 modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
             )
 
             Button(
-                onClick = { onUpsertCategory(newCategory) },
+                onClick = {
+                    onUpsertCategory(newCategory.copy(name = textFieldState.text.toString()))
+                },
                 shapes =
                     ButtonShapes(
                         shape = MaterialTheme.shapes.extraLarge,
                         pressedShape = MaterialTheme.shapes.small,
                     ),
                 modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth(),
-                enabled = newCategory.name.isNotBlank() && newCategory.name.length <= 20,
+                enabled = textFieldState.text.isNotBlank() && textFieldState.text.length <= 20,
             ) {
                 Text(text = stringResource(if (isEditSheet) Res.string.done else Res.string.save))
             }
