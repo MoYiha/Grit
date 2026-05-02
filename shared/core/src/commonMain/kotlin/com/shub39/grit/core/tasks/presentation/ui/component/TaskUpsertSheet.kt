@@ -293,10 +293,11 @@ fun TaskUpsertSheetContent(
                         ),
                     modifier = Modifier.weight(1f),
                     enabled =
-                        (textFieldState.text.isNotBlank() &&
-                            textFieldState.text.toString() != task.title &&
-                            textFieldState.text.length <= 100 &&
-                            isValidDateTime) || newTask.reminder != task.reminder,
+                        textFieldState.text.isNotBlank() &&
+                                textFieldState.text.length <= 100 &&
+                                isValidDateTime &&
+                                (newTask.reminder != task.reminder ||
+                                        textFieldState.text.toString() != task.title),
                 ) {
                     Text(stringResource(if (isEditSheet) Res.string.save else Res.string.add_task))
                 }
@@ -319,8 +320,8 @@ fun TaskUpsertSheetContent(
                                         LocalDateTime(
                                             date =
                                                 Instant.fromEpochMilliseconds(
-                                                        datePickerState.selectedDateMillis!!
-                                                    )
+                                                    datePickerState.selectedDateMillis!!
+                                                )
                                                     .toLocalDateTime(TimeZone.UTC)
                                                     .date,
                                             time =
