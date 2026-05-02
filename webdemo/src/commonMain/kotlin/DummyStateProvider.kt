@@ -48,48 +48,75 @@ import kotlinx.datetime.plus
 object DummyStateProvider {
     private val _habitState =
         MutableStateFlow(
-            HabitState(
-                habitsWithAnalytics =
-                    listOf(
-                        HabitWithAnalytics(
-                            habit =
-                                Habit(
-                                    id = 1,
-                                    title = "Morning Walk",
-                                    description = "A 30-minute walk every morning",
-                                    time = LocalDateTime.now(),
-                                    days = DayOfWeek.entries.toSet(),
-                                    index = 0,
-                                    reminder = true,
-                                ),
-                            statuses = emptyList(),
-                            weeklyComparisonData = emptyList(),
-                            weekDayFrequencyData = emptyMap(),
-                            currentStreak = 5,
-                            bestStreak = 10,
-                            startedDaysAgo = 30,
-                        ),
-                        HabitWithAnalytics(
-                            habit =
-                                Habit(
-                                    id = 2,
-                                    title = "Read a book",
-                                    description = "Read 20 pages of a book",
-                                    time = LocalDateTime.now(),
-                                    days = DayOfWeek.entries.toSet(),
-                                    index = 1,
-                                    reminder = false,
-                                ),
-                            statuses = emptyList(),
-                            weeklyComparisonData = emptyList(),
-                            weekDayFrequencyData = emptyMap(),
-                            currentStreak = 3,
-                            bestStreak = 8,
-                            startedDaysAgo = 25,
-                        ),
-                    )
-            )
+            HabitState(habitsWithAnalytics = createDummyHabits()).let { state ->
+                val today = LocalDate.now()
+                val completedHabitIds =
+                    state.habitsWithAnalytics
+                        .filter { it.statuses.any { it.date == today } }
+                        .map { it.habit.id }
+                state.copy(
+                    completedHabitIds = completedHabitIds,
+                    overallAnalytics = calculateOverallAnalytics(state.habitsWithAnalytics),
+                )
+            }
         )
+
+    private fun createDummyHabits(): List<HabitWithAnalytics> {
+        val morningWalkHabit =
+            Habit(
+                id = 1,
+                title = "Morning Walk",
+                description = "A 30-minute walk every morning",
+                time = LocalDateTime.now(),
+                days = DayOfWeek.entries.toSet(),
+                index = 0,
+                reminder = true,
+            )
+        val readBookHabit =
+            Habit(
+                id = 2,
+                title = "Read a book",
+                description = "Read 20 pages of a book",
+                time = LocalDateTime.now(),
+                days = DayOfWeek.entries.toSet(),
+                index = 1,
+                reminder = false,
+            )
+
+        return listOf(
+            createHabitWithAnalytics(morningWalkHabit, 90),
+            createHabitWithAnalytics(readBookHabit, 90),
+        )
+    }
+
+    private fun createHabitWithAnalytics(habit: Habit, daysAgo: Int): HabitWithAnalytics {
+        val statuses = generateDummyStatuses(habit.id, daysAgo)
+        val dates = statuses.map { it.date }
+        return HabitWithAnalytics(
+            habit = habit,
+            statuses = statuses,
+            weeklyComparisonData = prepareLineChartData(DayOfWeek.MONDAY, statuses),
+            weekDayFrequencyData = prepareWeekDayFrequencyData(dates),
+            currentStreak = countCurrentStreak(dates, habit.days),
+            bestStreak = countBestStreak(dates, habit.days),
+            startedDaysAgo = daysAgo.toLong(),
+        )
+    }
+
+    private fun generateDummyStatuses(habitId: Long, days: Int): List<HabitStatus> {
+        val today = LocalDate.now()
+        val statuses = mutableListOf<HabitStatus>()
+        val random = Random(habitId) // Consistent dummy data per habit
+        for (i in 0 until days) {
+            val date = today.minus(i, DateTimeUnit.DAY)
+            // 70-80% completion rate for dummy data
+            if (random.nextFloat() > 0.25) {
+                statuses.add(HabitStatus(habitId = habitId, date = date))
+            }
+        }
+        return statuses
+    }
+
     private val _taskState =
         MutableStateFlow(
             TaskState(

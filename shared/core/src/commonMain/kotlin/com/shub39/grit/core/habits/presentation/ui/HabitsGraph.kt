@@ -233,7 +233,6 @@ fun HabitsGraph(
                                 onNavigateBack = { onAction(HabitsAction.PrepareAnalytics(null)) },
                                 onNavigateToPaywall = onNavigateToPaywall,
                                 isUserSubscribed = isUserSubscribed,
-                                modifier = Modifier.background(MaterialTheme.colorScheme.background),
                             )
                         } else {
                             OverallAnalytics(
@@ -243,7 +242,6 @@ fun HabitsGraph(
                                 onNavigateToPaywall = onNavigateToPaywall,
                                 isUserSubscribed = isUserSubscribed,
                                 onAction = onAction,
-                                modifier = Modifier.background(MaterialTheme.colorScheme.background),
                             )
                         }
                     }
