@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonGroupDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -56,7 +55,6 @@ import kotlin.math.roundToInt
 import kotlin.random.Random
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
     var selectedTimePeriod by rememberSaveable { mutableStateOf(WeeklyTimePeriod.WEEKS_8) }
@@ -139,6 +137,7 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                                         Text(
                                             text = data.roundToInt().toString(),
                                             color = MaterialTheme.colorScheme.primary,
+                                            style = MaterialTheme.typography.labelMedium,
                                         )
                                     }
                                 }
@@ -159,6 +158,7 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                                     Text(
                                         text = data.roundToInt().toString(),
                                         color = MaterialTheme.colorScheme.secondary,
+                                        style = MaterialTheme.typography.labelMedium,
                                     )
                                 }
                             }

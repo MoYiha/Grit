@@ -32,12 +32,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -51,6 +51,7 @@ import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +59,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -90,6 +95,7 @@ import grit.shared.core.generated.resources.title
 import grit.shared.core.generated.resources.too_long
 import grit.shared.core.generated.resources.update_description
 import grit.shared.core.generated.resources.update_title
+import kotlinx.coroutines.delay
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -106,7 +112,6 @@ expect fun HabitUpsertSheet(
     isEditSheet: Boolean = false,
 )
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HabitUpsertSheetContent(
     newHabit: Habit,
@@ -119,7 +124,28 @@ fun HabitUpsertSheetContent(
     onRequestPermission: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
     var timePickerDialog by remember { mutableStateOf(false) }
+
+    val titleTextFieldState =
+        rememberTextFieldState(
+            initialText = newHabit.title,
+            initialSelection = TextRange(newHabit.title.length),
+        )
+
+    val descTextFieldState =
+        rememberTextFieldState(
+            initialText = newHabit.description,
+            initialSelection = TextRange(newHabit.description.length),
+        )
+
+    LaunchedEffect(Unit) {
+        delay(400)
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
 
     GritBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -164,16 +190,14 @@ fun HabitUpsertSheetContent(
         ) {
             item {
                 OutlinedTextField(
-                    value = newHabit.title,
-                    singleLine = true,
+                    state = titleTextFieldState,
+                    lineLimits = TextFieldLineLimits.SingleLine,
                     shape = MaterialTheme.shapes.medium,
                     keyboardOptions =
-                        KeyboardOptions.Default.copy(
+                        KeyboardOptions(
                             capitalization = KeyboardCapitalization.Sentences,
-                            imeAction = ImeAction.Done,
+                            imeAction = ImeAction.Next,
                         ),
-                    onValueChange = { updateHabit(newHabit.copy(title = it)) },
-                    modifier = Modifier.fillMaxWidth(),
                     label = {
                         if (newHabit.title.length <= 20) {
                             Text(
@@ -188,21 +212,21 @@ fun HabitUpsertSheetContent(
                         }
                     },
                     isError = newHabit.title.length > 20,
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 )
             }
 
             item {
                 OutlinedTextField(
-                    value = newHabit.description,
-                    singleLine = true,
+                    state = descTextFieldState,
+                    lineLimits = TextFieldLineLimits.SingleLine,
                     shape = MaterialTheme.shapes.medium,
                     keyboardOptions =
-                        KeyboardOptions.Default.copy(
+                        KeyboardOptions(
                             capitalization = KeyboardCapitalization.Sentences,
                             imeAction = ImeAction.Done,
                         ),
                     modifier = Modifier.fillMaxWidth(),
-                    onValueChange = { updateHabit(newHabit.copy(description = it)) },
                     label = {
                         if (newHabit.description.length <= 50) {
                             Text(
@@ -339,14 +363,19 @@ fun HabitUpsertSheetContent(
 
         Button(
             onClick = {
-                onUpsertHabit(newHabit)
+                onUpsertHabit(
+                    newHabit.copy(
+                        title = titleTextFieldState.text.toString(),
+                        description = descTextFieldState.text.toString(),
+                    )
+                )
                 onDismissRequest()
             },
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 32.dp).fillMaxWidth(),
             enabled =
-                newHabit.description.length <= 50 &&
-                    newHabit.title.length <= 20 &&
-                    newHabit.title.isNotBlank(),
+                descTextFieldState.text.length <= 50 &&
+                    titleTextFieldState.text.length <= 20 &&
+                    titleTextFieldState.text.isNotBlank(),
         ) {
             Text(text = stringResource(if (isEditSheet) Res.string.save else Res.string.add_habit))
         }

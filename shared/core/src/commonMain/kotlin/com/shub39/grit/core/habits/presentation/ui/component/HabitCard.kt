@@ -36,8 +36,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -67,7 +65,6 @@ import grit.shared.core.generated.resources.analytics
 import grit.shared.core.generated.resources.check_circle
 import grit.shared.core.generated.resources.circle_border
 import grit.shared.core.generated.resources.heat
-import kotlin.time.ExperimentalTime
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
@@ -75,11 +72,6 @@ import kotlinx.datetime.minus
 import org.jetbrains.compose.resources.vectorResource
 
 /** Habit Card for list */
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalTime::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-)
 @Composable
 fun HabitCard(
     habitWithAnalytics: HabitWithAnalytics,

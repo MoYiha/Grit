@@ -25,8 +25,8 @@ plugins {
 }
 
 val appName = "Grit"
-val appVersionCode = 5910
-val appVersionName = "5.9.1"
+val appVersionCode = 5920
+val appVersionName = "5.9.2"
 
 val gitHash = execute("git", "rev-parse", "HEAD").take(7)
 
@@ -102,9 +102,7 @@ android {
     }
 
     packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+        resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" }
         jniLibs.keepDebugSymbols.add("**/*.so")
     }
 
@@ -118,6 +116,9 @@ kotlin {
     compilerOptions {
         optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
         optIn.add("androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
+        optIn.add(
+            "androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
+        )
     }
 }
 
@@ -205,7 +206,7 @@ val generateChangelogJson by
             val json = buildString {
                 append("[\n")
 
-                map.entries.forEachIndexed { index, entry ->
+                map.entries.take(10).forEachIndexed { index, entry ->
                     append("  {\n")
                     append("    \"version\": \"${entry.key}\",\n")
                     append("    \"changes\": [\n")
@@ -219,7 +220,7 @@ val generateChangelogJson by
                     append("    ]\n")
                     append("  }")
 
-                    if (index != map.entries.size - 1) append(",")
+                    if (index != 9) append(",")
                     append("\n")
                 }
 

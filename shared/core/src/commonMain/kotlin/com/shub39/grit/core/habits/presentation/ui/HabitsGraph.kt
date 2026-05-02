@@ -30,8 +30,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconToggleButtonShapes
@@ -94,7 +92,6 @@ private val config = SavedStateConfiguration {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitsGraph(
     state: HabitState,
@@ -236,7 +233,6 @@ fun HabitsGraph(
                                 onNavigateBack = { onAction(HabitsAction.PrepareAnalytics(null)) },
                                 onNavigateToPaywall = onNavigateToPaywall,
                                 isUserSubscribed = isUserSubscribed,
-                                modifier = Modifier.background(MaterialTheme.colorScheme.background),
                             )
                         } else {
                             OverallAnalytics(
@@ -246,7 +242,6 @@ fun HabitsGraph(
                                 onNavigateToPaywall = onNavigateToPaywall,
                                 isUserSubscribed = isUserSubscribed,
                                 onAction = onAction,
-                                modifier = Modifier.background(MaterialTheme.colorScheme.background),
                             )
                         }
                     }
@@ -256,7 +251,6 @@ fun HabitsGraph(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun HabitsTopAppBar(
     state: HabitState,

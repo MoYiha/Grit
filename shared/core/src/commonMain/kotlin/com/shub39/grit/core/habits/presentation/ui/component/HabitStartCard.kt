@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialShapes.Companion.Sunny
 import androidx.compose.material3.MaterialTheme
@@ -55,7 +54,6 @@ import kotlinx.datetime.minus
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun HabitStartCard(
     date: LocalDate,

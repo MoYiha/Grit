@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,7 +58,6 @@ import com.shub39.grit.core.utils.now
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.view_week
 import grit.shared.core.generated.resources.weekly_progress
-import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -67,17 +65,11 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.YearMonth
 import kotlinx.datetime.format
-import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.char
 import kotlinx.datetime.minus
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(
-    ExperimentalTime::class,
-    FormatStringsInDatetimeFormats::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-)
 @Composable
 fun WeeklyBooleanHeatMap(
     heatMapState: HeatMapCalendarState,

@@ -17,6 +17,7 @@
 import com.shub39.grit.core.habits.domain.Habit
 import com.shub39.grit.core.habits.domain.HabitStatus
 import com.shub39.grit.core.habits.domain.HabitWithAnalytics
+import com.shub39.grit.core.habits.domain.OverallAnalytics
 import com.shub39.grit.core.habits.domain.WeekDayFrequencyData
 import com.shub39.grit.core.habits.domain.WeeklyComparisonData
 import com.shub39.grit.core.habits.presentation.HabitState
@@ -47,48 +48,75 @@ import kotlinx.datetime.plus
 object DummyStateProvider {
     private val _habitState =
         MutableStateFlow(
-            HabitState(
-                habitsWithAnalytics =
-                    listOf(
-                        HabitWithAnalytics(
-                            habit =
-                                Habit(
-                                    id = 1,
-                                    title = "Morning Walk",
-                                    description = "A 30-minute walk every morning",
-                                    time = LocalDateTime.now(),
-                                    days = DayOfWeek.entries.toSet(),
-                                    index = 0,
-                                    reminder = true,
-                                ),
-                            statuses = emptyList(),
-                            weeklyComparisonData = emptyList(),
-                            weekDayFrequencyData = emptyMap(),
-                            currentStreak = 5,
-                            bestStreak = 10,
-                            startedDaysAgo = 30,
-                        ),
-                        HabitWithAnalytics(
-                            habit =
-                                Habit(
-                                    id = 2,
-                                    title = "Read a book",
-                                    description = "Read 20 pages of a book",
-                                    time = LocalDateTime.now(),
-                                    days = DayOfWeek.entries.toSet(),
-                                    index = 1,
-                                    reminder = false,
-                                ),
-                            statuses = emptyList(),
-                            weeklyComparisonData = emptyList(),
-                            weekDayFrequencyData = emptyMap(),
-                            currentStreak = 3,
-                            bestStreak = 8,
-                            startedDaysAgo = 25,
-                        ),
-                    )
-            )
+            HabitState(habitsWithAnalytics = createDummyHabits()).let { state ->
+                val today = LocalDate.now()
+                val completedHabitIds =
+                    state.habitsWithAnalytics
+                        .filter { it.statuses.any { it.date == today } }
+                        .map { it.habit.id }
+                state.copy(
+                    completedHabitIds = completedHabitIds,
+                    overallAnalytics = calculateOverallAnalytics(state.habitsWithAnalytics),
+                )
+            }
         )
+
+    private fun createDummyHabits(): List<HabitWithAnalytics> {
+        val morningWalkHabit =
+            Habit(
+                id = 1,
+                title = "Morning Walk",
+                description = "A 30-minute walk every morning",
+                time = LocalDateTime.now(),
+                days = DayOfWeek.entries.toSet(),
+                index = 0,
+                reminder = true,
+            )
+        val readBookHabit =
+            Habit(
+                id = 2,
+                title = "Read a book",
+                description = "Read 20 pages of a book",
+                time = LocalDateTime.now(),
+                days = DayOfWeek.entries.toSet(),
+                index = 1,
+                reminder = false,
+            )
+
+        return listOf(
+            createHabitWithAnalytics(morningWalkHabit, 90),
+            createHabitWithAnalytics(readBookHabit, 90),
+        )
+    }
+
+    private fun createHabitWithAnalytics(habit: Habit, daysAgo: Int): HabitWithAnalytics {
+        val statuses = generateDummyStatuses(habit.id, daysAgo)
+        val dates = statuses.map { it.date }
+        return HabitWithAnalytics(
+            habit = habit,
+            statuses = statuses,
+            weeklyComparisonData = prepareLineChartData(DayOfWeek.MONDAY, statuses),
+            weekDayFrequencyData = prepareWeekDayFrequencyData(dates),
+            currentStreak = countCurrentStreak(dates, habit.days),
+            bestStreak = countBestStreak(dates, habit.days),
+            startedDaysAgo = daysAgo.toLong(),
+        )
+    }
+
+    private fun generateDummyStatuses(habitId: Long, days: Int): List<HabitStatus> {
+        val today = LocalDate.now()
+        val statuses = mutableListOf<HabitStatus>()
+        val random = Random(habitId) // Consistent dummy data per habit
+        for (i in 0 until days) {
+            val date = today.minus(i, DateTimeUnit.DAY)
+            // 70-80% completion rate for dummy data
+            if (random.nextFloat() > 0.25) {
+                statuses.add(HabitStatus(habitId = habitId, date = date))
+            }
+        }
+        return statuses
+    }
+
     private val _taskState =
         MutableStateFlow(
             TaskState(
@@ -123,8 +151,10 @@ object DummyStateProvider {
                             bestStreak = 0,
                             startedDaysAgo = 0,
                         )
+                    val updatedHabits = it.habitsWithAnalytics + newHabitWithAnalytics
                     it.copy(
-                        habitsWithAnalytics = it.habitsWithAnalytics + newHabitWithAnalytics,
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                         showHabitAddSheet = false,
                     )
                 }
@@ -132,9 +162,11 @@ object DummyStateProvider {
 
             is HabitsAction.DeleteHabit -> {
                 _habitState.update { state ->
+                    val updatedHabits =
+                        state.habitsWithAnalytics.filter { it.habit.id != action.habit.id }
                     state.copy(
-                        habitsWithAnalytics =
-                            state.habitsWithAnalytics.filter { it.habit.id != action.habit.id }
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                     )
                 }
             }
@@ -192,6 +224,7 @@ object DummyStateProvider {
                     state.copy(
                         habitsWithAnalytics = updatedHabits,
                         completedHabitIds = updatedCompletedHabitIds,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                     )
                 }
             }
@@ -226,7 +259,10 @@ object DummyStateProvider {
                                 it
                             }
                         }
-                    state.copy(habitsWithAnalytics = updatedHabits)
+                    state.copy(
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
+                    )
                 }
             }
 
@@ -341,6 +377,28 @@ object DummyStateProvider {
                 }
             }
         }
+    }
+
+    private fun calculateOverallAnalytics(
+        habitsWithAnalytics: List<HabitWithAnalytics>
+    ): OverallAnalytics {
+        val allStatuses = habitsWithAnalytics.flatMap { it.statuses }
+
+        val heatMapData = allStatuses.groupingBy { it.date }.eachCount()
+
+        val weekDayFrequencyData = prepareWeekDayFrequencyData(allStatuses.map { it.date })
+
+        val today = LocalDate.now()
+        val completedHabits =
+            habitsWithAnalytics
+                .filter { it.statuses.any { status -> status.date == today } }
+                .map { it.habit.title }
+
+        return OverallAnalytics(
+            heatMapData = heatMapData,
+            weekDayFrequencyData = weekDayFrequencyData,
+            completedHabits = completedHabits,
+        )
     }
 
     private fun countCurrentStreak(

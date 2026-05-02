@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,7 +57,6 @@ import com.shub39.grit.core.utils.now
 import grit.shared.core.generated.resources.Res
 import grit.shared.core.generated.resources.calendar_month
 import grit.shared.core.generated.resources.monthly_progress
-import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -73,7 +71,6 @@ import kotlinx.datetime.plus
 import org.jetbrains.compose.resources.stringResource
 
 /** Boolean Calendar map highlighting days */
-@OptIn(ExperimentalTime::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun CalendarMap(
     canSeeContent: Boolean,

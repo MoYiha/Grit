@@ -28,14 +28,12 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -63,6 +61,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -87,7 +86,6 @@ import grit.shared.core.generated.resources.edit_task
 import grit.shared.core.generated.resources.invalid_date_time
 import grit.shared.core.generated.resources.save
 import grit.shared.core.generated.resources.schedule
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDateTime
@@ -109,11 +107,6 @@ expect fun TaskUpsertSheet(
     isEditSheet: Boolean = false,
 )
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalTime::class,
-)
 @Composable
 fun TaskUpsertSheetContent(
     task: Task,
@@ -130,6 +123,12 @@ fun TaskUpsertSheetContent(
     modifier: Modifier = Modifier,
 ) {
     var newTask by remember { mutableStateOf(task) }
+
+    val textFieldState =
+        rememberTextFieldState(
+            initialText = newTask.title,
+            initialSelection = TextRange(newTask.title.length),
+        )
 
     val timePickerState = rememberTimePickerState(is24Hour = is24Hr)
     val datePickerState = rememberDatePickerState()
@@ -200,8 +199,7 @@ fun TaskUpsertSheetContent(
                 }
 
                 OutlinedTextField(
-                    value = newTask.title,
-                    onValueChange = { newTask = newTask.copy(title = it) },
+                    state = textFieldState,
                     shape = MaterialTheme.shapes.medium,
                     placeholder = { Text(text = stringResource(Res.string.add_task)) },
                     keyboardOptions =
@@ -209,10 +207,10 @@ fun TaskUpsertSheetContent(
                             capitalization = KeyboardCapitalization.Sentences,
                             imeAction = ImeAction.None,
                         ),
-                    keyboardActions =
-                        KeyboardActions(
-                            onAny = { newTask = newTask.copy(title = newTask.title.plus("\n")) }
-                        ),
+                    onKeyboardAction = { defaultAction ->
+                        textFieldState.edit { append("\n") }
+                        defaultAction()
+                    },
                     modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 )
             }
@@ -285,7 +283,7 @@ fun TaskUpsertSheetContent(
 
                 Button(
                     onClick = {
-                        onUpsert(newTask)
+                        onUpsert(newTask.copy(title = textFieldState.text.toString()))
                         onDismissRequest()
                     },
                     shapes =
@@ -295,10 +293,11 @@ fun TaskUpsertSheetContent(
                         ),
                     modifier = Modifier.weight(1f),
                     enabled =
-                        newTask.title.isNotBlank() &&
-                            newTask.title.length <= 100 &&
-                            newTask != task &&
-                            isValidDateTime,
+                        textFieldState.text.isNotBlank() &&
+                                textFieldState.text.length <= 100 &&
+                                isValidDateTime &&
+                                (newTask.reminder != task.reminder ||
+                                        textFieldState.text.toString() != task.title),
                 ) {
                     Text(stringResource(if (isEditSheet) Res.string.save else Res.string.add_task))
                 }
@@ -321,8 +320,8 @@ fun TaskUpsertSheetContent(
                                         LocalDateTime(
                                             date =
                                                 Instant.fromEpochMilliseconds(
-                                                        datePickerState.selectedDateMillis!!
-                                                    )
+                                                    datePickerState.selectedDateMillis!!
+                                                )
                                                     .toLocalDateTime(TimeZone.UTC)
                                                     .date,
                                             time =

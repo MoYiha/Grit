@@ -18,7 +18,6 @@ package com.shub39.grit.core.shared_ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -42,7 +41,6 @@ import grit.shared.core.generated.resources.select_time
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GritTimePicker(
     onDismissRequest: () -> Unit,

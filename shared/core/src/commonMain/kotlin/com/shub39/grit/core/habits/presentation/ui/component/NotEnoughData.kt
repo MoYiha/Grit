@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +38,6 @@ import grit.shared.core.generated.resources.warning
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NotEnoughData(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
