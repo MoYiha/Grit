@@ -17,6 +17,7 @@
 import com.shub39.grit.core.habits.domain.Habit
 import com.shub39.grit.core.habits.domain.HabitStatus
 import com.shub39.grit.core.habits.domain.HabitWithAnalytics
+import com.shub39.grit.core.habits.domain.OverallAnalytics
 import com.shub39.grit.core.habits.domain.WeekDayFrequencyData
 import com.shub39.grit.core.habits.domain.WeeklyComparisonData
 import com.shub39.grit.core.habits.presentation.HabitState
@@ -123,8 +124,10 @@ object DummyStateProvider {
                             bestStreak = 0,
                             startedDaysAgo = 0,
                         )
+                    val updatedHabits = it.habitsWithAnalytics + newHabitWithAnalytics
                     it.copy(
-                        habitsWithAnalytics = it.habitsWithAnalytics + newHabitWithAnalytics,
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                         showHabitAddSheet = false,
                     )
                 }
@@ -132,9 +135,11 @@ object DummyStateProvider {
 
             is HabitsAction.DeleteHabit -> {
                 _habitState.update { state ->
+                    val updatedHabits =
+                        state.habitsWithAnalytics.filter { it.habit.id != action.habit.id }
                     state.copy(
-                        habitsWithAnalytics =
-                            state.habitsWithAnalytics.filter { it.habit.id != action.habit.id }
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                     )
                 }
             }
@@ -192,6 +197,7 @@ object DummyStateProvider {
                     state.copy(
                         habitsWithAnalytics = updatedHabits,
                         completedHabitIds = updatedCompletedHabitIds,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
                     )
                 }
             }
@@ -226,7 +232,10 @@ object DummyStateProvider {
                                 it
                             }
                         }
-                    state.copy(habitsWithAnalytics = updatedHabits)
+                    state.copy(
+                        habitsWithAnalytics = updatedHabits,
+                        overallAnalytics = calculateOverallAnalytics(updatedHabits),
+                    )
                 }
             }
 
@@ -341,6 +350,28 @@ object DummyStateProvider {
                 }
             }
         }
+    }
+
+    private fun calculateOverallAnalytics(
+        habitsWithAnalytics: List<HabitWithAnalytics>
+    ): OverallAnalytics {
+        val allStatuses = habitsWithAnalytics.flatMap { it.statuses }
+
+        val heatMapData = allStatuses.groupingBy { it.date }.eachCount()
+
+        val weekDayFrequencyData = prepareWeekDayFrequencyData(allStatuses.map { it.date })
+
+        val today = LocalDate.now()
+        val completedHabits =
+            habitsWithAnalytics
+                .filter { it.statuses.any { status -> status.date == today } }
+                .map { it.habit.title }
+
+        return OverallAnalytics(
+            heatMapData = heatMapData,
+            weekDayFrequencyData = weekDayFrequencyData,
+            completedHabits = completedHabits,
+        )
     }
 
     private fun countCurrentStreak(

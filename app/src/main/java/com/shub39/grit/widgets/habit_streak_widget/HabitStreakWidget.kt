@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.shub39.grit.widgets.habitstreakwidget
+package com.shub39.grit.widgets.habit_streak_widget
 
 import android.content.Context
 import android.os.Build
