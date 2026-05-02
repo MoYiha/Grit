@@ -49,6 +49,7 @@ import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -88,6 +92,7 @@ import grit.shared.core.generated.resources.title
 import grit.shared.core.generated.resources.too_long
 import grit.shared.core.generated.resources.update_description
 import grit.shared.core.generated.resources.update_title
+import kotlinx.coroutines.delay
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -116,7 +121,16 @@ fun HabitUpsertSheetContent(
     onRequestPermission: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
     var timePickerDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(400)
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
 
     GritBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -165,12 +179,11 @@ fun HabitUpsertSheetContent(
                     singleLine = true,
                     shape = MaterialTheme.shapes.medium,
                     keyboardOptions =
-                        KeyboardOptions.Default.copy(
+                        KeyboardOptions(
                             capitalization = KeyboardCapitalization.Sentences,
-                            imeAction = ImeAction.Done,
+                            imeAction = ImeAction.Next,
                         ),
                     onValueChange = { updateHabit(newHabit.copy(title = it)) },
-                    modifier = Modifier.fillMaxWidth(),
                     label = {
                         if (newHabit.title.length <= 20) {
                             Text(
@@ -185,6 +198,7 @@ fun HabitUpsertSheetContent(
                         }
                     },
                     isError = newHabit.title.length > 20,
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                 )
             }
 
@@ -194,7 +208,7 @@ fun HabitUpsertSheetContent(
                     singleLine = true,
                     shape = MaterialTheme.shapes.medium,
                     keyboardOptions =
-                        KeyboardOptions.Default.copy(
+                        KeyboardOptions(
                             capitalization = KeyboardCapitalization.Sentences,
                             imeAction = ImeAction.Done,
                         ),

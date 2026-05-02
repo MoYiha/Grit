@@ -1,5 +1,13 @@
 [
   {
+    "version": "5.9.2",
+    "changes": [
+      "Miscellaneous UI fixes",
+      "Updated Translations",
+      "Added Keyboard Autofocus to new Habit (#280)"
+    ]
+  },
+  {
     "version": "5.9.1",
     "changes": [
       "Miscellaneous fixes and updates",
@@ -60,140 +68,6 @@
     "changes": [
       "Fixed widgets randomly changing into other widgets #256",
       "Fixed current streak calculation"
-    ]
-  },
-  {
-    "version": "5.7.2",
-    "changes": [
-      "Habits overview widget now only displays set habits for the day #253"
-    ]
-  },
-  {
-    "version": "5.7.1",
-    "changes": [
-      "Isolated flex typography to uses, Fixing overflow wrapping #250"
-    ]
-  },
-  {
-    "version": "5.7.0",
-    "changes": [
-      "Added flex fonts and typography",
-      "Redesigned Weekly comparison and week day breakdown charts",
-      "Extracted week day selection from reminders in habit create/edit sheet",
-      "Removed Weekly graph from overall analytics (looked messy)",
-      "Made keyboard animations smoother on editsheets #248"
-    ]
-  },
-  {
-    "version": "5.6.2",
-    "changes": [
-      "Fixed past reminders not working #241"
-    ]
-  },
-  {
-    "version": "5.6.1",
-    "changes": [
-      "Fixed time picker UI flicker #237",
-      "Notifications are now dismissed if marked as done within app #238"
-    ]
-  },
-  {
-    "version": "5.6.0",
-    "changes": [
-      "Fixed Tasks widget corners, Added Refresh button",
-      "Fixed Habits Overview Widget proportions, Added Refresh button",
-      "Revamped Habit Streaks widget",
-      "Added Habit Week Chart Widget",
-      "Added dynamic Widget previews for launchers",
-      "Changed Notification Icon to previous icon",
-      "Fixed settings UI on landscape mode"
-    ]
-  },
-  {
-    "version": "5.5.53",
-    "changes": [
-      "Fixed Notifications not working #229"
-    ]
-  },
-  {
-    "version": "5.5.52",
-    "changes": [
-      "Fixed time picker mismatch #193",
-      "Refreshed habit cards design",
-      "Added google sans and system default font options",
-      "Added toggle for different timepicker types #224",
-      "Fixed Text wrap #197",
-      "Fixed incorrect backup dates #216",
-      "Dependency updates and misc fixes"
-    ]
-  },
-  {
-    "version": "5.5.51",
-    "changes": [
-      "Fixed widgets stuck on loading",
-      "Added weblate info on settings",
-      "Dependency updates"
-    ]
-  },
-  {
-    "version": "5.5.5",
-    "changes": [
-      "Redid all icons due to technical reasons",
-      "migration and refactors to new libs",
-      "tasks and categories add sheet now open keyboard on launch (#206) by @madhan-selvaraj",
-      "miscellaneous fixes and improvements"
-    ]
-  },
-  {
-    "version": "5.5.4",
-    "changes": [
-      "Removed unnecessary permissions #184"
-    ]
-  },
-  {
-    "version": "5.5.3",
-    "changes": [
-      "Fixed weird widget behaviour #170 #192",
-      "Edited widget previews"
-    ]
-  },
-  {
-    "version": "5.5.2",
-    "changes": [
-      "Fixed Habit Notifications not appearing."
-    ]
-  },
-  {
-    "version": "5.5.1",
-    "changes": [
-      "Replaced habit heatmap month text to abbreviated month",
-      "updated metadata"
-    ]
-  },
-  {
-    "version": "5.5.0",
-    "changes": [
-      "Made UI adaptive to larger screen sizes",
-      "Added grit server to manage tasks and habits on desktop in sync with app",
-      "Made dates clickable on Habits list (#173)",
-      "Optimised task reordering logic (#182)",
-      "Added delete button on task edit sheet (#181)",
-      "Replaced \"Edit\" with \"Save\" on task edit sheet (#180)",
-      "Removed about libraries (#168)"
-    ]
-  },
-  {
-    "version": "5.1.0",
-    "changes": [
-      "Added new all tasks widget",
-      "Tweaked Habit Widget"
-    ]
-  },
-  {
-    "version": "5.0.2",
-    "changes": [
-      "Updated deps to fix misc bugs",
-      "Testing automatic release"
     ]
   }
 ]

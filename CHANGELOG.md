@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.9.2
+- Miscellaneous UI fixes
+- Updated Translations
+- Added Keyboard Autofocus to new Habit (#280)
+
 ## 5.9.1
 - Miscellaneous fixes and updates
 - Updated Translations
