@@ -51,8 +51,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonShapes
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilledTonalIconToggleButton
@@ -278,7 +276,6 @@ fun TaskList(state: TaskState, onAction: (TaskAction) -> Unit, onEditCategories:
         }
     }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun TaskListTopBar(
     state: TaskState,
@@ -349,7 +346,6 @@ private fun TaskListTopBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun CategorySelector(
     state: TaskState,
@@ -416,7 +412,6 @@ private fun CategorySelector(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun CompactTasksView(
     state: TaskState,
@@ -600,7 +595,6 @@ private fun CompactTasksView(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ExpandedTasksView(
     state: TaskState,
@@ -862,7 +856,6 @@ private fun ExpandedTasksView(
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun DeleteTasksDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     GritDialog(onDismissRequest = onDismiss) {

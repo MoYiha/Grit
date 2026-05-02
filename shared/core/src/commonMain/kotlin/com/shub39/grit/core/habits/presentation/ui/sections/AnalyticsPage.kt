@@ -34,8 +34,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonShapes
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -85,16 +83,10 @@ import grit.shared.core.generated.resources.delete
 import grit.shared.core.generated.resources.delete_warning
 import grit.shared.core.generated.resources.edit
 import grit.shared.core.generated.resources.warning
-import kotlin.time.ExperimentalTime
 import kotlinx.datetime.YearMonth
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalTime::class,
-)
 @Composable
 fun AnalyticsPage(
     state: HabitState,

@@ -34,8 +34,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonShapes
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -87,7 +85,6 @@ import grit.shared.core.generated.resources.edit_task
 import grit.shared.core.generated.resources.invalid_date_time
 import grit.shared.core.generated.resources.save
 import grit.shared.core.generated.resources.schedule
-import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 import kotlinx.coroutines.delay
 import kotlinx.datetime.LocalDateTime
@@ -109,11 +106,6 @@ expect fun TaskUpsertSheet(
     isEditSheet: Boolean = false,
 )
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3ExpressiveApi::class,
-    ExperimentalTime::class,
-)
 @Composable
 fun TaskUpsertSheetContent(
     task: Task,

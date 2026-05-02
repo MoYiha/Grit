@@ -102,9 +102,7 @@ android {
     }
 
     packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+        resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" }
         jniLibs.keepDebugSymbols.add("**/*.so")
     }
 
@@ -118,6 +116,9 @@ kotlin {
     compilerOptions {
         optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
         optIn.add("androidx.compose.material3.ExperimentalMaterial3ExpressiveApi")
+        optIn.add(
+            "androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
+        )
     }
 }
 

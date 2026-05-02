@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -36,7 +35,6 @@ import grit.shared.core.generated.resources.arrow_back
 import grit.shared.core.generated.resources.arrow_forward
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun CardArrows(
     onBackAction: () -> Unit,

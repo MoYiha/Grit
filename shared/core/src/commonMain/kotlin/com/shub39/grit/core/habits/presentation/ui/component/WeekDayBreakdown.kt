@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,7 +47,6 @@ import kotlin.random.nextInt
 import kotlinx.datetime.format.DayOfWeekNames
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WeekDayBreakdown(
     canSeeContent: Boolean,
@@ -104,7 +102,7 @@ fun WeekDayBreakdown(
                                     Text(
                                         text = data.toString(),
                                         color = MaterialTheme.colorScheme.primary,
-                                        style = MaterialTheme.typography.labelMedium
+                                        style = MaterialTheme.typography.labelMedium,
                                     )
                                 }
                             } else if (data > (max / 2)) {
@@ -122,7 +120,7 @@ fun WeekDayBreakdown(
                                     Text(
                                         text = data.toString(),
                                         color = MaterialTheme.colorScheme.secondary,
-                                        style = MaterialTheme.typography.labelMedium
+                                        style = MaterialTheme.typography.labelMedium,
                                     )
                                 }
                             }
