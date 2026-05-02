@@ -139,6 +139,7 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                                         Text(
                                             text = data.roundToInt().toString(),
                                             color = MaterialTheme.colorScheme.primary,
+                                            style = MaterialTheme.typography.labelMedium
                                         )
                                     }
                                 }
@@ -159,6 +160,7 @@ fun WeeklyActivity(lineChartData: List<Double>, modifier: Modifier = Modifier) {
                                     Text(
                                         text = data.roundToInt().toString(),
                                         color = MaterialTheme.colorScheme.secondary,
+                                        style = MaterialTheme.typography.labelMedium
                                     )
                                 }
                             }

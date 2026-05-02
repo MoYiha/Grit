@@ -104,6 +104,7 @@ fun WeekDayBreakdown(
                                     Text(
                                         text = data.toString(),
                                         color = MaterialTheme.colorScheme.primary,
+                                        style = MaterialTheme.typography.labelMedium
                                     )
                                 }
                             } else if (data > (max / 2)) {
@@ -121,6 +122,7 @@ fun WeekDayBreakdown(
                                     Text(
                                         text = data.toString(),
                                         color = MaterialTheme.colorScheme.secondary,
+                                        style = MaterialTheme.typography.labelMedium
                                     )
                                 }
                             }
